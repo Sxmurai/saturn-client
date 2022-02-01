@@ -1,0 +1,17 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "cope.saturn.asm.mixins",
+  "compatibilityLevel": "JAVA_17",
+  "mixins": [
+    "input.MixinKeyboard",
+
+    "network.packet.c2s.IPlayerInteractEntityC2SPacket",
+    "network.MixinClientConnection",
+
+    "MixinMinecraftClient"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}
