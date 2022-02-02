@@ -12,6 +12,8 @@
     "network.packet.c2s.IPlayerMoveC2SPacket",
     "network.MixinClientConnection",
 
+    "render.MixinPlayerEntityRenderer",
+
     "MixinMinecraftClient"
   ],
   "injectors": {

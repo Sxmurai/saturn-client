@@ -69,4 +69,8 @@ public class RotationManager implements Wrapper {
         stopwatch.reset();
         rotation = r;
     }
+
+    public Rotation getRotation() {
+        return rotation;
+    }
 }
