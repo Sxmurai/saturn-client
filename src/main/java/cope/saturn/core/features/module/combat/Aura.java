@@ -98,7 +98,7 @@ public class Aura extends Module {
                 r = r.set(r.yaw() + random, r.pitch() + random);
             }
 
-            rotation = r;
+            rotation = r.type(rotate.getValue().type);
             rotation.send(false);
         }
 
