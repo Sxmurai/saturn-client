@@ -1,4 +1,4 @@
-package cope.saturn.util.player.rotation;
+package cope.saturn.util.entity.player.rotation;
 
 import cope.saturn.util.internal.Wrapper;
 import net.minecraft.util.math.MathHelper;

@@ -4,6 +4,7 @@ import cope.saturn.core.Saturn;
 import cope.saturn.core.events.KeyPressedEvent;
 import cope.saturn.core.features.module.Module;
 import cope.saturn.core.features.module.combat.AimBot;
+import cope.saturn.core.features.module.combat.Aura;
 import cope.saturn.core.features.module.combat.Criticals;
 import cope.saturn.core.features.module.movement.Sprint;
 import cope.saturn.core.features.module.visuals.Fullbright;
@@ -21,6 +22,7 @@ public class ModuleManager {
 
         // Combat
         modules.add(new AimBot());
+        modules.add(new Aura());
         modules.add(new Criticals());
 
         // Movement

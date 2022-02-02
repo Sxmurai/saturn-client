@@ -1,4 +1,4 @@
-package cope.saturn.util.player.rotation;
+package cope.saturn.util.entity.player.rotation;
 
 public enum RotationType {
     /**

@@ -1,5 +1,6 @@
 package cope.saturn.util.internal;
 
+import cope.saturn.core.Saturn;
 import net.minecraft.client.MinecraftClient;
 
 public interface Wrapper {
@@ -11,5 +12,9 @@ public interface Wrapper {
      */
     default boolean nullCheck() {
         return mc.player == null || mc.world == null;
+    }
+
+    default Saturn getSaturn() {
+        return Saturn.getInstance();
     }
 }

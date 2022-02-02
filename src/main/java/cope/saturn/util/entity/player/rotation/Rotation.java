@@ -1,10 +1,10 @@
-package cope.saturn.util.player.rotation;
+package cope.saturn.util.entity.player.rotation;
 
 import cope.saturn.util.internal.Wrapper;
 import cope.saturn.util.network.NetworkUtil;
 import net.minecraft.network.packet.c2s.play.PlayerMoveC2SPacket;
 
-public record Rotation(RotationType type, float yaw, float pitch) {
+public record Rotation(RotationType type, float yaw, float pitch) implements Wrapper {
     public Rotation set(float yaw, float pitch) {
         return new Rotation(type, yaw, pitch);
     }
@@ -17,7 +17,7 @@ public record Rotation(RotationType type, float yaw, float pitch) {
         if (type.equals(RotationType.NONE)) {
             return;
         }
-        
+
         if (sendPacket) {
             NetworkUtil.sendPacket(new PlayerMoveC2SPacket.LookAndOnGround(yaw, pitch, Wrapper.mc.player.isOnGround()));
         }
@@ -28,9 +28,11 @@ public record Rotation(RotationType type, float yaw, float pitch) {
                 Wrapper.mc.player.setPitch(pitch);
             }
 
-            case PACKET -> {
-                // TODO: rotation manager
-            }
+            case PACKET -> getSaturn().getRotationManager().rotate(this);
         }
+    }
+
+    public boolean isValid() {
+        return !Float.isNaN(yaw) && !Float.isNaN(pitch);
     }
 }
