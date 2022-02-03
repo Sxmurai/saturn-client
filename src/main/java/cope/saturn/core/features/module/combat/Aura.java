@@ -11,6 +11,7 @@ import cope.saturn.util.entity.player.rotation.Rotation;
 import cope.saturn.util.entity.player.rotation.RotationType;
 import cope.saturn.util.entity.player.rotation.RotationUtil;
 import me.bush.eventbus.annotation.EventListener;
+import net.minecraft.client.Keyboard;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.ShieldItem;
@@ -108,8 +109,7 @@ public class Aura extends Module {
         if (!canAttack && autoBlock.getValue() &&
                 ShieldItem.class.isInstance(mc.player.getOffHandStack().getItem())) {
 
-            // TODO: this doesnt actually block your shield... fix this
-            mc.interactionManager.interactItem(mc.player, mc.world, Hand.OFF_HAND);
+            // i tried to figure this out, i might have to make a mixin for this. for now, this wont do shit
         }
 
         if (canAttack) {
