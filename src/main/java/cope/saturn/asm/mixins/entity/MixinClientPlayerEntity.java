@@ -2,9 +2,11 @@ package cope.saturn.asm.mixins.entity;
 
 import com.mojang.authlib.GameProfile;
 import cope.saturn.core.Saturn;
+import cope.saturn.core.events.ItemSlowdownEvent;
 import cope.saturn.core.events.SendMovementPacketsEvent;
 import cope.saturn.util.network.NetworkUtil;
 import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.input.Input;
 import net.minecraft.client.network.AbstractClientPlayerEntity;
 import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.client.world.ClientWorld;
@@ -56,6 +58,9 @@ public abstract class MixinClientPlayerEntity extends AbstractClientPlayerEntity
     @Shadow
     private boolean autoJumpEnabled;
 
+    @Shadow
+    public Input input;
+
     public MixinClientPlayerEntity(ClientWorld world, GameProfile profile) {
         super(world, profile);
     }
@@ -78,6 +83,16 @@ public abstract class MixinClientPlayerEntity extends AbstractClientPlayerEntity
     @Inject(method = "sendMovementPackets", at = @At("TAIL"))
     public void sendMovementPacketsPost(CallbackInfo info) {
         Saturn.EVENT_BUS.post(new SendMovementPacketsEvent());
+    }
+
+    @Inject(
+            method = "tickMovement",
+            at = @At(
+                    value = "FIELD",
+                    target = "Lnet/minecraft/client/network/ClientPlayerEntity;ticksLeftToDoubleTapSprint:I",
+                    shift = At.Shift.AFTER))
+    public void afterSprintReset(CallbackInfo info) {
+        Saturn.EVENT_BUS.post(new ItemSlowdownEvent(input));
     }
 
     private void sendModifiedMovementPackets(double x, double y, double z, float yaw, float pitch, boolean onGround) {

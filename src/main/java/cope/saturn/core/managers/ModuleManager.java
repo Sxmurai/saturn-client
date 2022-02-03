@@ -6,6 +6,7 @@ import cope.saturn.core.features.module.Module;
 import cope.saturn.core.features.module.combat.AimBot;
 import cope.saturn.core.features.module.combat.Aura;
 import cope.saturn.core.features.module.combat.Criticals;
+import cope.saturn.core.features.module.movement.NoSlow;
 import cope.saturn.core.features.module.movement.Sprint;
 import cope.saturn.core.features.module.visuals.Fullbright;
 import me.bush.eventbus.annotation.EventListener;
@@ -26,6 +27,7 @@ public class ModuleManager {
         modules.add(new Criticals());
 
         // Movement
+        modules.add(new NoSlow());
         modules.add(new Sprint());
 
         // Visuals
