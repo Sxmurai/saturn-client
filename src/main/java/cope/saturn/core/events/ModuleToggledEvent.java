@@ -1,3 +1,8 @@
+/*
+ * Copyright (c) 2022. Saturn Client (https://github.com/Sxmurai/saturn-client)
+ * All rights reserved.
+ */
+
 package cope.saturn.core.events;
 
 import cope.saturn.core.features.module.Module;

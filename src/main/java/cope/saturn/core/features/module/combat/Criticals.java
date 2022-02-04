@@ -1,3 +1,8 @@
+/*
+ * Copyright (c) 2022. Saturn Client (https://github.com/Sxmurai/saturn-client)
+ * All rights reserved.
+ */
+
 package cope.saturn.core.features.module.combat;
 
 import cope.saturn.asm.mixins.network.packet.c2s.IPlayerInteractEntityC2SPacket;
