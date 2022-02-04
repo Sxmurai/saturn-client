@@ -1,6 +1,6 @@
 plugins {
 	id 'fabric-loom' version '0.11-SNAPSHOT'
-	id 'maven-publish'
+	id 'com.github.johnrengelman.shadow' version '7.1.2'
 }
 
 sourceCompatibility = JavaVersion.VERSION_17
@@ -15,18 +15,36 @@ loom {
 }
 
 repositories {
+	maven {
+		name = "meteor-maven-snapshots"
+		url = "https://maven.meteordev.org/snapshots"
+	}
 	flatDir {
 		dirs 'libs'
 	}
 }
 
 dependencies {
+	def dep = {
+		implementation it
+		shadow it
+	}
+
 	// To change the versions see the gradle.properties file
 	minecraft "com.mojang:minecraft:${project.minecraft_version}"
 	mappings "net.fabricmc:yarn:${project.yarn_mappings}:v2"
 	modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
 
-	implementation fileTree(include: ['*.jar'], dir: 'libs')
+	// use meteor-client's baritone because there isnt an official one for 1.18.1
+	modImplementation "baritone:baritone:${project.baritone_version}"
+	include "baritone:baritone:${project.baritone_version}"
+
+	// add libs needed from JARs (pretty much only bush's event bus)
+	dep fileTree(include: ['*.jar'], dir: 'libs')
+}
+
+shadowJar {
+	configurations = [ project.configurations.shadow ]
 }
 
 processResources {
@@ -37,16 +55,15 @@ processResources {
 	}
 }
 
-tasks.withType(JavaCompile).configureEach {
-	it.options.release = 17
-}
-
-java {
-
+tasks.withType(JavaCompile) {
+	options.encoding = "UTF-8"
 }
 
 jar {
-	from("LICENSE") {
-		rename { "${it}_${project.archivesBaseName}"}
-	}
+	from "LICENSE"
+}
+
+remapJar {
+	dependsOn shadowJar
+	input.set(shadowJar.archiveFile)
 }
