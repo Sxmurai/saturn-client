@@ -10,10 +10,6 @@ archivesBaseName = project.archives_base_name
 version = project.mod_version
 group = project.maven_group
 
-loom {
-	accessWidenerPath = file("src/main/resources/saturn.accesswidener")
-}
-
 repositories {
 	maven {
 		name = "meteor-maven-snapshots"
@@ -37,14 +33,19 @@ dependencies {
 
 	// use meteor-client's baritone because there isnt an official one for 1.18.1
 	modImplementation "baritone:baritone:${project.baritone_version}"
-	include "baritone:baritone:${project.baritone_version}"
+	shadow "baritone:baritone:${project.baritone_version}"
 
 	// add libs needed from JARs (pretty much only bush's event bus)
 	dep fileTree(include: ['*.jar'], dir: 'libs')
 }
 
+loom {
+	accessWidenerPath = file("src/main/resources/saturn.accesswidener")
+}
+
 shadowJar {
 	configurations = [ project.configurations.shadow ]
+	classifier = 'all'
 }
 
 processResources {
@@ -55,7 +56,7 @@ processResources {
 	}
 }
 
-tasks.withType(JavaCompile) {
+tasks.withType(JavaCompile).configureEach {
 	options.encoding = "UTF-8"
 }
 
