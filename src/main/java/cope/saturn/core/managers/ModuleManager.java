@@ -8,6 +8,7 @@ package cope.saturn.core.managers;
 import cope.saturn.core.Saturn;
 import cope.saturn.core.events.KeyPressedEvent;
 import cope.saturn.core.features.module.Module;
+import cope.saturn.core.features.module.client.ClickGUI;
 import cope.saturn.core.features.module.combat.AimBot;
 import cope.saturn.core.features.module.combat.Aura;
 import cope.saturn.core.features.module.combat.Criticals;
@@ -25,6 +26,9 @@ public class ModuleManager {
     public ModuleManager() {
         // subscribe to event bus (key presses, etc)
         Saturn.EVENT_BUS.subscribe(this);
+
+        // Client
+        modules.add(new ClickGUI());
 
         // Combat
         modules.add(new AimBot());
@@ -53,5 +57,9 @@ public class ModuleManager {
                 }
             }
         }
+    }
+
+    public ArrayList<Module> getModules() {
+        return modules;
     }
 }

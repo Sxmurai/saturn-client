@@ -6,10 +6,19 @@
 package cope.saturn.core.features.module;
 
 public enum Category {
-    CLIENT,
-    COMBAT,
-    MISCELLANEOUS,
-    MOVEMENT,
-    VISUALS,
-    WORLD
+    CLIENT("Client"),
+    COMBAT("Combat"),
+    MISCELLANEOUS("Miscellaneous"),
+    MOVEMENT("Movement"),
+    VISUALS("Visuals"),
+    WORLD("World");
+
+    private final String displayName;
+    Category(String displayName) {
+        this.displayName = displayName;
+    }
+
+    public String getDisplayName() {
+        return displayName;
+    }
 }

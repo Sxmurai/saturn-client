@@ -103,22 +103,23 @@ public class Module implements Wrapper {
     public void toggle() {
         toggled = !toggled;
 
-        Saturn.EVENT_BUS.post(new ModuleToggledEvent(this));
-        Saturn.LOGGER.info("Module {} received new state: {}", name, toggled);
-
         if (toggled) {
-            onEnable();
+            enable();
         } else {
-            onDisable();
+            disable();
         }
     }
 
     public void enable() {
+        Saturn.EVENT_BUS.post(new ModuleToggledEvent(this));
+
         toggled = true;
         onEnable();
     }
 
     public void disable() {
+        Saturn.EVENT_BUS.post(new ModuleToggledEvent(this));
+
         toggled = false;
         onDisable();
     }
