@@ -15,11 +15,10 @@ import me.bush.eventbus.annotation.EventListener;
 import net.minecraft.network.packet.c2s.play.PlayerInteractEntityC2SPacket;
 import net.minecraft.network.packet.c2s.play.PlayerMoveC2SPacket;
 import net.minecraft.util.math.Vec3d;
-import org.lwjgl.glfw.GLFW;
 
 public class Criticals extends Module {
     public Criticals() {
-        super("Criticals", Category.COMBAT, "Makes you deal critical hits", GLFW.GLFW_KEY_C);
+        super("Criticals", Category.COMBAT, "Makes you deal critical hits");
     }
 
     public static final Setting<Mode> mode = new Setting<>("Mode", Mode.PACKET);

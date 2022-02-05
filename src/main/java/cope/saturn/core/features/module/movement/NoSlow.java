@@ -25,7 +25,7 @@ import org.lwjgl.glfw.GLFW;
 
 public class NoSlow extends Module {
     public NoSlow() {
-        super("NoSlow", Category.MOVEMENT, "Stops slowdown with items", GLFW.GLFW_KEY_H);
+        super("NoSlow", Category.MOVEMENT, "Stops slowdown with items");
     }
 
     public static final Setting<Boolean> inventoryMove = new Setting<>("InventoryMove", true);

@@ -10,11 +10,10 @@ import cope.saturn.core.features.module.Category;
 import cope.saturn.core.features.module.Module;
 import cope.saturn.core.settings.Setting;
 import me.bush.eventbus.annotation.EventListener;
-import org.lwjgl.glfw.GLFW;
 
 public class Sprint extends Module {
     public Sprint() {
-        super("Sprint", Category.MOVEMENT, "Makes you automatically sprint", GLFW.GLFW_KEY_N);
+        super("Sprint", Category.MOVEMENT, "Makes you automatically sprint");
     }
 
     public static final Setting<Mode> mode = new Setting<>("Mode", Mode.STRICT);

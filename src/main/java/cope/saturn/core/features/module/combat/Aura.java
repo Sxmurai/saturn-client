@@ -16,19 +16,17 @@ import cope.saturn.util.entity.player.rotation.Rotation;
 import cope.saturn.util.entity.player.rotation.RotationType;
 import cope.saturn.util.entity.player.rotation.RotationUtil;
 import me.bush.eventbus.annotation.EventListener;
-import net.minecraft.client.Keyboard;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.ShieldItem;
 import net.minecraft.item.SwordItem;
 import net.minecraft.util.Hand;
-import org.lwjgl.glfw.GLFW;
 
 import java.util.concurrent.ThreadLocalRandom;
 
 public class Aura extends Module {
     public Aura() {
-        super("Aura", Category.COMBAT, "Attacks entities around you", GLFW.GLFW_KEY_R);
+        super("Aura", Category.COMBAT, "Attacks entities around you");
     }
 
     public static final Setting<Priority> priority = new Setting<>("Priority", Priority.RANGE);

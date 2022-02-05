@@ -14,11 +14,10 @@ import cope.saturn.util.entity.player.rotation.RotationUtil;
 import me.bush.eventbus.annotation.EventListener;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
-import org.lwjgl.glfw.GLFW;
 
 public class AimBot extends Module {
     public AimBot() {
-        super("AimBot", Category.COMBAT, "Aims you clientside to the closest entity", GLFW.GLFW_KEY_B);
+        super("AimBot", Category.COMBAT, "Aims you clientside to the closest entity");
     }
 
     public static final Setting<Double> range = new Setting<>("Range", 4.5, 1.0, 6.0);
