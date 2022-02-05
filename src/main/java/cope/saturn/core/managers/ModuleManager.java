@@ -15,12 +15,13 @@ import cope.saturn.core.features.module.combat.Criticals;
 import cope.saturn.core.features.module.movement.NoSlow;
 import cope.saturn.core.features.module.movement.Sprint;
 import cope.saturn.core.features.module.visuals.Fullbright;
+import cope.saturn.util.internal.Wrapper;
 import me.bush.eventbus.annotation.EventListener;
 import org.lwjgl.glfw.GLFW;
 
 import java.util.ArrayList;
 
-public class ModuleManager {
+public class ModuleManager implements Wrapper {
     private final ArrayList<Module> modules = new ArrayList<>();
 
     public ModuleManager() {
@@ -50,7 +51,9 @@ public class ModuleManager {
 
     @EventListener
     public void onKeyPressed(KeyPressedEvent event) {
-        if (event.getAction() == GLFW.GLFW_PRESS && event.getKey() != GLFW.GLFW_KEY_UNKNOWN) {
+        if (event.getAction() == GLFW.GLFW_PRESS &&
+                event.getKey() != GLFW.GLFW_KEY_UNKNOWN &&
+                mc.currentScreen == null) {
             for (Module module : modules) {
                 if (module.getBind() == event.getKey()) {
                     module.toggle();
