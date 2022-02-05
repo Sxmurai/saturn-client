@@ -14,7 +14,7 @@ public class Fullbright extends Module {
     private double oldGamma = -1.0;
 
     public Fullbright() {
-        super("Fullbright", Category.VISUALS, "Makes the game brigher");
+        super("Fullbright", Category.VISUALS, "Makes the game brighter");
     }
 
     @Override
