@@ -7,7 +7,7 @@ package cope.saturn.core.ui.click.components;
 
 import cope.saturn.core.features.module.Category;
 import cope.saturn.core.features.module.Module;
-import cope.saturn.core.ui.click.components.impl.ModuleButton;
+import cope.saturn.core.ui.click.components.impl.button.ModuleButton;
 import cope.saturn.util.input.MouseUtil;
 import cope.saturn.util.render.RenderUtil;
 import cope.saturn.util.render.TextUtil;
@@ -95,7 +95,11 @@ public class Frame extends Component {
 
     @Override
     public void keyPressed(char typedChar, int keyCode) {
-
+        children.forEach((child) -> {
+            if (child.isVisible()) {
+                child.keyPressed(typedChar, keyCode);
+            }
+        });
     }
 
     private double getTotalHeight() {

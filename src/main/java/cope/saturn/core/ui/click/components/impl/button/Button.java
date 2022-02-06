@@ -3,7 +3,7 @@
  * All rights reserved.
  */
 
-package cope.saturn.core.ui.click.components.impl;
+package cope.saturn.core.ui.click.components.impl.button;
 
 import cope.saturn.core.ui.click.components.Component;
 import net.minecraft.client.sound.PositionedSoundInstance;

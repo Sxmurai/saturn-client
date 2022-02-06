@@ -59,6 +59,12 @@ public class ClickGUIScreen extends Screen implements Wrapper {
     }
 
     @Override
+    public boolean keyPressed(int keyCode, int scanCode, int modifiers) {
+        frames.forEach((frame) -> frame.keyPressed('n', keyCode));
+        return super.keyPressed(keyCode, scanCode, modifiers);
+    }
+
+    @Override
     public void onClose() {
         ClickGUI.INSTANCE.disable();
     }

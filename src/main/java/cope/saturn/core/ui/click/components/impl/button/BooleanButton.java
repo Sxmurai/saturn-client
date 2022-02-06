@@ -3,9 +3,9 @@
  * All rights reserved.
  */
 
-package cope.saturn.core.ui.click.components.impl;
+package cope.saturn.core.ui.click.components.impl.button;
 
-import cope.saturn.core.features.module.Module;
+import cope.saturn.core.settings.Setting;
 import cope.saturn.util.input.MouseUtil;
 import cope.saturn.util.render.RenderUtil;
 import cope.saturn.util.render.TextUtil;
@@ -13,23 +13,21 @@ import net.minecraft.client.util.math.MatrixStack;
 
 import java.awt.*;
 
-public class ModuleButton extends Button {
-    private final Module module;
+public class BooleanButton extends Button {
+    private final Setting<Boolean> setting;
 
-    private boolean expanded = false;
-
-    public ModuleButton(Module module) {
-        super(module.getName());
-        this.module = module;
+    public BooleanButton(Setting<Boolean> setting) {
+        super(setting.getName());
+        this.setting = setting;
     }
 
     @Override
     public void render(MatrixStack matrixStack, float mouseX, float mouseY, float partialTicks) {
-        if (module.isToggled()) {
+        if (setting.getValue()) {
             RenderUtil.rect(x, y, height, width, new Color(150, 46, 230).getRGB());
         }
 
-        mc.textRenderer.draw(matrixStack, getName(), (float) (x + 2.3), (float) TextUtil.alignH(y, height), -1);
+        mc.textRenderer.draw(matrixStack, setting.getName(), (float) (x + 2.3), (float) TextUtil.alignH(y, height), -1);
     }
 
     @Override
@@ -45,9 +43,7 @@ public class ModuleButton extends Button {
     @Override
     public void onInteract(int button) {
         if (button == MouseUtil.LEFT_CLICK) {
-            module.toggle();
-        } else if (button == MouseUtil.RIGHT_CLICK) {
-            expanded = !expanded;
+            setting.setValue(!setting.getValue());
         }
     }
 }
