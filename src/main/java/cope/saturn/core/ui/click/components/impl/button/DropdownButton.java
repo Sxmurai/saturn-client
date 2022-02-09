@@ -5,7 +5,6 @@
 
 package cope.saturn.core.ui.click.components.impl.button;
 
-import cope.saturn.core.features.module.Module;
 import cope.saturn.core.settings.Bind;
 import cope.saturn.core.settings.Setting;
 import cope.saturn.core.ui.click.components.Component;
@@ -14,52 +13,55 @@ import cope.saturn.util.render.RenderUtil;
 import cope.saturn.util.render.TextUtil;
 import net.minecraft.client.util.math.MatrixStack;
 
-import java.awt.Color;
+import java.awt.*;
+import java.util.List;
 
-public class ModuleButton extends Button {
-    private final Module module;
+public class DropdownButton extends Button {
+    private final Setting setting;
 
     private boolean expanded = false;
 
-    public ModuleButton(Module module) {
-        super(module.getName());
-        this.module = module;
+    public DropdownButton(Setting setting) {
+        super(setting.getName());
 
-        for (Setting setting : module.getSettings()) {
-            if (!setting.getChildren().isEmpty() && setting.getParent() == null) {
-                children.add(new DropdownButton(setting));
-                continue;
-            }
+        this.setting = setting;
 
-            if (setting.getParent() != null) {
-                continue;
+        ((List<Setting>) setting.getChildren()).forEach((child) -> {
+            if (!child.getChildren().isEmpty()) {
+                children.add(new DropdownButton(child));
+            } else if (child instanceof Bind) {
+                children.add(new BindButton((Bind) child));
+            } else {
+                if (child.getValue() instanceof Boolean) {
+                    children.add(new BooleanButton(child));
+                } else if (child.getValue() instanceof Enum) {
+                    children.add(new EnumButton(child));
+                }
             }
-
-            if (setting instanceof Bind) {
-                children.add(new BindButton((Bind) setting));
-                continue;
-            }
-
-            if (setting.getValue() instanceof Boolean) {
-                children.add(new BooleanButton(setting));
-            } else if (setting.getValue() instanceof Enum) {
-                children.add(new EnumButton(setting));
-            }
-        }
+        });
     }
 
     @Override
     public void render(MatrixStack matrixStack, float mouseX, float mouseY, float partialTicks) {
-        if (module.isToggled()) {
-            RenderUtil.rect(x, y, height, width, new Color(150, 46, 230).getRGB());
+        if (setting.getValue() instanceof Boolean) {
+            if ((boolean) setting.getValue()) {
+                RenderUtil.rect(x, y, height, width, new Color(150, 46, 230).getRGB());
+            }
+
+            mc.textRenderer.draw(matrixStack, getName(), (float) (x + 2.3), (float) TextUtil.alignH(y, height), -1);
+        } else if (setting.getValue() instanceof Enum) {
+            mc.textRenderer.draw(matrixStack, setting.getName() + " \u00A77" + ((Enum) setting.getValue()).name(), (float) (x + 2.3), (float) TextUtil.alignH(y, height), -1);
         }
 
-        mc.textRenderer.draw(matrixStack, getName(), (float) (x + 2.3), (float) TextUtil.alignH(y, height), -1);
+        String dots = expanded ? ". " : "...";
+        int textWidth = mc.textRenderer.getWidth(dots);
+
+        mc.textRenderer.draw(matrixStack, dots, (float) (x + width) - textWidth - 2.3f, (float) TextUtil.alignH(y, height), -1);
 
         if (expanded) {
             double startY = y + height;
 
-            for (Component component : children) {
+            for (cope.saturn.core.ui.click.components.Component component : children) {
                 if (component.isVisible()) {
                     component.setX(x + 2.0);
                     component.setY(startY);
@@ -101,7 +103,11 @@ public class ModuleButton extends Button {
     @Override
     public void onInteract(int button) {
         if (button == MouseUtil.LEFT_CLICK) {
-            module.toggle();
+            if (setting.getValue() instanceof Boolean) {
+                setting.setValue(!(boolean) setting.getValue());
+            } else if (setting.getValue() instanceof Enum) {
+                setting.setValue(Setting.current((Enum) setting.getValue()));
+            }
         } else if (button == MouseUtil.RIGHT_CLICK) {
             expanded = !expanded;
         }
