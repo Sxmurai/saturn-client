@@ -14,6 +14,8 @@
 
     "network.packet.c2s.IPlayerInteractEntityC2SPacket",
     "network.packet.c2s.IPlayerMoveC2SPacket",
+    "network.packet.s2c.IEntityVelocityUpdateS2CPacket",
+    "network.packet.s2c.IExplosionS2CPacket",
     "network.MixinClientConnection",
 
     "render.MixinPlayerEntityRenderer"

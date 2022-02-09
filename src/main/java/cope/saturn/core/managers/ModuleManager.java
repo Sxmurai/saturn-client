@@ -12,6 +12,7 @@ import cope.saturn.core.features.module.client.ClickGUI;
 import cope.saturn.core.features.module.combat.*;
 import cope.saturn.core.features.module.movement.NoSlow;
 import cope.saturn.core.features.module.movement.Sprint;
+import cope.saturn.core.features.module.movement.Velocity;
 import cope.saturn.core.features.module.visuals.Fullbright;
 import cope.saturn.core.features.module.world.Scaffold;
 import cope.saturn.core.features.module.world.Timer;
@@ -41,6 +42,7 @@ public class ModuleManager implements Wrapper {
         // Movement
         modules.add(new NoSlow());
         modules.add(new Sprint());
+        modules.add(new Velocity());
 
         // Visuals
         modules.add(new Fullbright());
