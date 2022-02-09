@@ -33,9 +33,10 @@ public class Aura extends Module {
 
     public static final Setting<Timing> timing = new Setting<>("Timing", Timing.SEQUENTIAL);
 
-    public static final Setting<Double> range = new Setting<>("Range", 4.5, 1.0, 6.0);
-    public static final Setting<Boolean> walls = new Setting<>("Walls", true);
-    public static final Setting<Double> wallRange = new Setting<>(range, "WallRange", 3.5, 1.0, 6.0);
+    public static final Setting<Object> ranges = new Setting<>("Ranges", null);
+    public static final Setting<Double> range = new Setting<>(ranges, "Range", 4.5, 1.0, 6.0);
+    public static final Setting<Boolean> walls = new Setting<>(ranges, "Walls", true);
+    public static final Setting<Double> wallRange = new Setting<>(walls, "WallRange", 3.5, 1.0, 6.0);
 
     public static final Setting<Rotate> rotate = new Setting<>("Rotate", Rotate.PACKET);
     public static final Setting<Float> rate = new Setting<>(rotate, "Rate", 55.0f, 10.0f, 180.0f);

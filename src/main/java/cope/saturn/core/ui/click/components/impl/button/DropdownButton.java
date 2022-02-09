@@ -51,6 +51,8 @@ public class DropdownButton extends Button {
             mc.textRenderer.draw(matrixStack, getName(), (float) (x + 2.3), (float) TextUtil.alignH(y, height), -1);
         } else if (setting.getValue() instanceof Enum) {
             mc.textRenderer.draw(matrixStack, setting.getName() + " \u00A77" + ((Enum) setting.getValue()).name(), (float) (x + 2.3), (float) TextUtil.alignH(y, height), -1);
+        } else {
+            mc.textRenderer.draw(matrixStack, setting.getName(), (float) (x + 2.3), (float) TextUtil.alignH(y, height), -1);
         }
 
         String dots = expanded ? ". " : "...";
