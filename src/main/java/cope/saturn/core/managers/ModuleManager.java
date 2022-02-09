@@ -11,6 +11,7 @@ import cope.saturn.core.features.module.Module;
 import cope.saturn.core.features.module.client.ClickGUI;
 import cope.saturn.core.features.module.combat.AimBot;
 import cope.saturn.core.features.module.combat.Aura;
+import cope.saturn.core.features.module.combat.AutoTotem;
 import cope.saturn.core.features.module.combat.Criticals;
 import cope.saturn.core.features.module.movement.NoSlow;
 import cope.saturn.core.features.module.movement.Sprint;
@@ -34,6 +35,7 @@ public class ModuleManager implements Wrapper {
         // Combat
         modules.add(new AimBot());
         modules.add(new Aura());
+        modules.add(new AutoTotem());
         modules.add(new Criticals());
 
         // Movement

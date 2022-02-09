@@ -11,7 +11,7 @@ import cope.saturn.core.features.module.Module;
 import cope.saturn.core.managers.InventoryManager;
 import cope.saturn.core.settings.Setting;
 import cope.saturn.util.entity.EntityUtil;
-import cope.saturn.util.entity.player.InventoryUtil;
+import cope.saturn.util.entity.player.inventory.InventoryUtil;
 import cope.saturn.util.entity.player.rotation.Rotation;
 import cope.saturn.util.entity.player.rotation.RotationType;
 import cope.saturn.util.entity.player.rotation.RotationUtil;
