@@ -3,7 +3,7 @@
  * All rights reserved.
  */
 
-package cope.saturn.asm.mixins;
+package cope.saturn.asm.mixins.client;
 
 import cope.saturn.core.Saturn;
 import cope.saturn.core.events.ClientTickEvent;

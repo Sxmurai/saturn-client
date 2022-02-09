@@ -4,6 +4,10 @@
   "package": "cope.saturn.asm.mixins",
   "compatibilityLevel": "JAVA_17",
   "mixins": [
+    "client.IMinecraftClient",
+    "client.IRenderTickCounter",
+    "client.MixinMinecraftClient",
+
     "entity.MixinClientPlayerEntity",
 
     "input.MixinKeyboard",
@@ -12,9 +16,7 @@
     "network.packet.c2s.IPlayerMoveC2SPacket",
     "network.MixinClientConnection",
 
-    "render.MixinPlayerEntityRenderer",
-
-    "MixinMinecraftClient"
+    "render.MixinPlayerEntityRenderer"
   ],
   "injectors": {
     "defaultRequire": 1
