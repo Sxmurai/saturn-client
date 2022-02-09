@@ -15,11 +15,13 @@ import cope.saturn.util.entity.player.inventory.InventoryUtil;
 import cope.saturn.util.entity.player.rotation.Rotation;
 import cope.saturn.util.entity.player.rotation.RotationType;
 import cope.saturn.util.entity.player.rotation.RotationUtil;
+import cope.saturn.util.network.NetworkUtil;
 import me.bush.eventbus.annotation.EventListener;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.ShieldItem;
 import net.minecraft.item.SwordItem;
+import net.minecraft.network.packet.c2s.play.ClientCommandC2SPacket;
 import net.minecraft.util.Hand;
 
 import java.util.concurrent.ThreadLocalRandom;
@@ -119,6 +121,11 @@ public class Aura extends Module {
         if (canAttack) {
             if (autoBlock.getValue() && mc.player.isBlocking() && unblock.getValue()) {
                 mc.player.clearActiveItem();
+            }
+
+            if (mc.player.isSprinting()) {
+                mc.player.setSprinting(false);
+                NetworkUtil.sendPacket(new ClientCommandC2SPacket(mc.player, ClientCommandC2SPacket.Mode.STOP_SPRINTING));
             }
 
             mc.interactionManager.attackEntity(mc.player, target);
