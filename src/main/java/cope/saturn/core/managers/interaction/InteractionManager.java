@@ -40,7 +40,7 @@ public class InteractionManager implements Wrapper {
             RotationUtil
                     .rotation(vec.add(0.5, 0.5, 0.5))
                     .type(RotationType.PACKET)
-                    .send(false);
+                    .send(true);
         }
 
         Vec3d hitVec = new Vec3d(neighbor.getX(), neighbor.getY(), neighbor.getZ())

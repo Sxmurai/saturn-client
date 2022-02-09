@@ -16,7 +16,7 @@
   "license": "GPL-3.0",
   "icon": "assets/modid/icon.png",
 
-  "environment": "client",
+  "environment": "*",
   "entrypoints": {
     "client": [
       "cope.saturn.core.Saturn"

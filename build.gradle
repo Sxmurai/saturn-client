@@ -36,8 +36,8 @@ dependencies {
 	modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
 
 	// use meteor-client's baritone because there isnt an official one for 1.18.1
-	modImplementation "baritone:baritone:${project.baritone_version}"
-	shadow "baritone:baritone:${project.baritone_version}"
+//	modImplementation "baritone:baritone:${project.baritone_version}"
+//	shadow "baritone:baritone:${project.baritone_version}"
 
 	// add libs needed from JARs (pretty much only bush's event bus)
 	dep fileTree(include: ['*.jar'], dir: 'libs')
