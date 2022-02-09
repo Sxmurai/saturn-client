@@ -8,6 +8,7 @@ package cope.saturn.core;
 import cope.saturn.core.managers.InventoryManager;
 import cope.saturn.core.managers.ModuleManager;
 import cope.saturn.core.managers.RotationManager;
+import cope.saturn.core.managers.interaction.InteractionManager;
 import me.bush.eventbus.bus.EventBus;
 import me.bush.eventbus.handler.handlers.ReflectHandler;
 import net.fabricmc.api.ClientModInitializer;
@@ -28,6 +29,7 @@ public class Saturn implements ClientModInitializer {
 
     private InventoryManager inventoryManager;
     private RotationManager rotationManager;
+    private InteractionManager interactionManager;
 
     @Override
     public void onInitializeClient() {
@@ -37,6 +39,7 @@ public class Saturn implements ClientModInitializer {
 
         inventoryManager = new InventoryManager();
         rotationManager = new RotationManager();
+        interactionManager = new InteractionManager();
     }
 
     public ModuleManager getModuleManager() {
@@ -49,6 +52,10 @@ public class Saturn implements ClientModInitializer {
 
     public RotationManager getRotationManager() {
         return rotationManager;
+    }
+
+    public InteractionManager getInteractionManager() {
+        return interactionManager;
     }
 
     public static Saturn getInstance() {
