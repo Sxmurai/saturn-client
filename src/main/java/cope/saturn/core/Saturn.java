@@ -5,6 +5,7 @@
 
 package cope.saturn.core;
 
+import cope.saturn.core.managers.CommandManager;
 import cope.saturn.core.managers.InventoryManager;
 import cope.saturn.core.managers.ModuleManager;
 import cope.saturn.core.managers.RotationManager;
@@ -26,6 +27,7 @@ public class Saturn implements ClientModInitializer {
     public static EventBus EVENT_BUS = new EventBus(ReflectHandler.class, LOGGER::error);
 
     private ModuleManager moduleManager;
+    private CommandManager commandManager;
 
     private InventoryManager inventoryManager;
     private RotationManager rotationManager;
@@ -36,6 +38,7 @@ public class Saturn implements ClientModInitializer {
         INSTANCE = this;
 
         moduleManager = new ModuleManager();
+        commandManager = new CommandManager();
 
         inventoryManager = new InventoryManager();
         rotationManager = new RotationManager();
