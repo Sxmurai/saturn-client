@@ -33,6 +33,8 @@ public class ModuleButton extends Button {
 
             if (setting.getValue() instanceof Boolean) {
                 children.add(new BooleanButton(setting));
+            } else if (setting.getValue() instanceof Enum) {
+                children.add(new EnumButton(setting));
             }
         }
     }

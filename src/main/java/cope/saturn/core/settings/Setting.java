@@ -69,4 +69,38 @@ public class Setting<T> {
     public Number getMax() {
         return max;
     }
+
+    /**
+     * Gets the current index out of the enum constants
+     * @param clazz The enum
+     * @return the index in the array
+     */
+    public static int current(Enum clazz) {
+        for (int i = 0; i < clazz.getClass().getEnumConstants().length; ++i) {
+            Enum e = ((Enum[]) clazz.getClass().getEnumConstants())[i];
+            if (e.name().equalsIgnoreCase(clazz.name())) {
+                return i;
+            }
+        }
+
+        return -1;
+    }
+
+    /**
+     * Increases the enum constant to the next index, or 0 if the next index if out of bounds
+     * @param clazz The enum
+     * @return the next enum
+     */
+    public static Enum increaseEnum(Enum clazz) {
+        int index = current(clazz);
+
+        for (int i = 0; i < clazz.getClass().getEnumConstants().length; ++i) {
+            Enum e = ((Enum[]) clazz.getClass().getEnumConstants())[i];
+            if (i == index + 1) {
+                return e;
+            }
+        }
+
+        return ((Enum[]) clazz.getClass().getEnumConstants())[0];
+    }
 }
