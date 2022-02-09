@@ -35,6 +35,12 @@ public class Criticals extends Module {
                 switch (mode.getValue()) {
                     case PACKET -> NetworkUtil.sendPacket(new PlayerMoveC2SPacket.PositionAndOnGround(
                             mc.player.getX(), mc.player.getY() + 0.2, mc.player.getZ(), false));
+                    case STRICT -> {
+                        NetworkUtil.sendPacket(new PlayerMoveC2SPacket.PositionAndOnGround(
+                                mc.player.getX(), mc.player.getY() + 0.062602401692772, mc.player.getZ(), false));
+                        NetworkUtil.sendPacket(new PlayerMoveC2SPacket.PositionAndOnGround(
+                                mc.player.getX(), mc.player.getY() + 0.0726023996066094, mc.player.getZ(), false));
+                    }
                     case JUMP -> mc.player.jump();
                     case MINIJUMP -> {
                         Vec3d velocity = mc.player.getVelocity();
@@ -53,6 +59,11 @@ public class Criticals extends Module {
          * Sends a packet offset 0.2 in the air
          */
         PACKET,
+
+        /**
+         * Strict criticals
+         */
+        STRICT,
 
         /**
          * Jumps upwards
