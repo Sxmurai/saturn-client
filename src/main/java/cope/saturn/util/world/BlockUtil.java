@@ -11,7 +11,34 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Box;
 import net.minecraft.util.math.Direction;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class BlockUtil implements Wrapper {
+    /**
+     * Gets a sphere of blocks around a point of origin
+     * @param origin The origin point
+     * @param radius The radius
+     * @return a list of BlockPos's that are surrounding the origin in a sphere
+     */
+    public static List<BlockPos> sphere(BlockPos origin, int radius) {
+        ArrayList<BlockPos> positions = new ArrayList<>();
+
+        for (double x = -radius; x <= radius; ++x) {
+            for (double y = -radius; y <= radius; ++y) {
+                for (double z = -radius; z <= radius; ++z) {
+                    BlockPos pos = origin.add(x, y, z);
+
+                    if (mc.player.squaredDistanceTo(pos.getX() + 0.5, pos.getY() + 1.0, pos.getZ() + 0.5) <= radius * radius) {
+                        positions.add(pos);
+                    }
+                }
+            }
+        }
+
+        return positions;
+    }
+
     /**
      * Checks if the bounding box at this position is empty
      * @param pos The position

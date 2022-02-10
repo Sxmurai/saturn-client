@@ -10,6 +10,7 @@ import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import cope.saturn.core.Saturn;
 import cope.saturn.core.events.PacketEvent;
 import cope.saturn.core.features.command.Command;
+import cope.saturn.core.features.command.impl.FakePlayer;
 import cope.saturn.core.features.command.impl.Hello;
 import cope.saturn.core.features.command.impl.Toggle;
 import cope.saturn.util.internal.ChatUtil;
@@ -27,6 +28,7 @@ public class CommandManager {
     public CommandManager() {
         Saturn.EVENT_BUS.subscribe(this);
 
+        commands.add(new FakePlayer());
         commands.add(new Hello());
         commands.add(new Toggle());
 

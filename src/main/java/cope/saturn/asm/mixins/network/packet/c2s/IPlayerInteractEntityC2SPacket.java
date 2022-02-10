@@ -13,4 +13,7 @@ import org.spongepowered.asm.mixin.gen.Accessor;
 public interface IPlayerInteractEntityC2SPacket {
     @Accessor("type")
     PlayerInteractEntityC2SPacket.InteractTypeHandler getType();
+
+    @Accessor("entityId")
+    int getEntityId();
 }

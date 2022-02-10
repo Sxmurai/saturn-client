@@ -54,4 +54,12 @@ public class Stopwatch {
     public boolean passedNs(long ns) {
         return System.nanoTime() - time >= ns;
     }
+
+    /**
+     * Gets the time passed in milliseconds
+     * @return the time passed in milliseconds
+     */
+    public long getPassedMs() {
+        return (System.nanoTime() - time) / MS_TO_NS;
+    }
 }

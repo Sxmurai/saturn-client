@@ -16,6 +16,7 @@ import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.Vec3d;
+import net.minecraft.world.RaycastContext;
 
 /**
  * Handles interactions in the world (eg opening containers, placing blocks, etc)
@@ -56,5 +57,41 @@ public class InteractionManager implements Wrapper {
         }
 
         mc.player.swingHand(hand);
+    }
+
+    /**
+     * Places an end crystal
+     * @param pos The position to place at
+     * @param hand The hand to place with
+     * @param swing If to swing your hand
+     * @param raytrace If to raytrace
+     * @param strict If to use StrictDirection
+     */
+    public void placeCrystal(BlockPos pos, Hand hand, boolean swing, boolean raytrace, boolean strict) {
+        Direction direction = Direction.UP;
+
+        if (strict && pos.getY() > mc.player.getY() + mc.player.getStandingEyeHeight()) {
+            BlockHitResult result = mc.world.raycast(new RaycastContext(
+                    mc.player.getEyePos(),
+                    new Vec3d(pos.getX() + 0.5, pos.getY() + (raytrace ? 0.5 : 0.0), pos.getZ()),
+                    RaycastContext.ShapeType.COLLIDER,
+                    RaycastContext.FluidHandling.NONE,
+                    mc.player
+            ));
+
+            direction = (result == null || result.getSide() == null) ? Direction.DOWN : result.getSide();
+        }
+
+        NetworkUtil.sendPacket(new PlayerInteractBlockC2SPacket(hand,
+                new BlockHitResult(
+                        new Vec3d(pos.getX(), pos.getY(), pos.getZ()),
+                        direction,
+                        pos,
+                        false
+                )));
+
+        if (swing) {
+            mc.player.swingHand(hand);
+        }
     }
 }

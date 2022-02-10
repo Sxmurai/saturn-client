@@ -36,6 +36,7 @@ public class ModuleManager implements Wrapper {
         // Combat
         modules.add(new AimBot());
         modules.add(new Aura());
+        modules.add(new AutoCrystal());
         modules.add(new AutoTotem());
         modules.add(new BowRelease());
         modules.add(new Criticals());
