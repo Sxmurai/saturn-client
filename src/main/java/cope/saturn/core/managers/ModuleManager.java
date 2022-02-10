@@ -14,6 +14,7 @@ import cope.saturn.core.features.module.movement.NoSlow;
 import cope.saturn.core.features.module.movement.Sprint;
 import cope.saturn.core.features.module.movement.Velocity;
 import cope.saturn.core.features.module.visuals.Fullbright;
+import cope.saturn.core.features.module.world.AutoFish;
 import cope.saturn.core.features.module.world.Scaffold;
 import cope.saturn.core.features.module.world.Timer;
 import cope.saturn.util.internal.Wrapper;
@@ -48,6 +49,7 @@ public class ModuleManager implements Wrapper {
         modules.add(new Fullbright());
 
         // World
+        modules.add(new AutoFish());
         modules.add(new Scaffold());
         modules.add(new Timer());
 
