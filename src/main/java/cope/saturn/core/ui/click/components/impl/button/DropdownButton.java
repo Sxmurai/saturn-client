@@ -84,11 +84,14 @@ public class DropdownButton extends Button {
     @Override
     public void mouseClicked(double mouseX, double mouseY, int button) {
         super.mouseClicked(mouseX, mouseY, button);
-        children.forEach((child) -> {
-            if (child.isVisible()) {
-                child.mouseClicked(mouseX, mouseY, button);
-            }
-        });
+
+        if (expanded) {
+            children.forEach((child) -> {
+                if (child.isVisible()) {
+                    child.mouseClicked(mouseX, mouseY, button);
+                }
+            });
+        }
     }
 
     @Override
@@ -98,11 +101,13 @@ public class DropdownButton extends Button {
 
     @Override
     public void keyPressed(char typedChar, int keyCode) {
-        children.forEach((child) -> {
-            if (child.isVisible()) {
-                child.keyPressed(typedChar, keyCode);
-            }
-        });
+        if (expanded) {
+            children.forEach((child) -> {
+                if (child.isVisible()) {
+                    child.keyPressed(typedChar, keyCode);
+                }
+            });
+        }
     }
 
     @Override
