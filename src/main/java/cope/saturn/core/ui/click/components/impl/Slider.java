@@ -7,11 +7,10 @@ package cope.saturn.core.ui.click.components.impl;
 
 import cope.saturn.core.settings.Setting;
 import cope.saturn.core.ui.click.components.Component;
-import cope.saturn.util.input.MouseUtil;
+import cope.saturn.util.input.InputUtil;
 import cope.saturn.util.render.RenderUtil;
 import cope.saturn.util.render.TextUtil;
 import net.minecraft.client.util.math.MatrixStack;
-import org.lwjgl.glfw.GLFW;
 
 import java.awt.*;
 
@@ -28,7 +27,7 @@ public class Slider extends Component {
 
     @Override
     public void render(MatrixStack matrixStack, float mouseX, float mouseY, float partialTicks) {
-        if (MouseUtil.isButtonDown(MouseUtil.LEFT_CLICK) && isMouseInBounds(mouseX, mouseY)) {
+        if (InputUtil.isButtonDown(InputUtil.LEFT_CLICK) && isMouseInBounds(mouseX, mouseY)) {
             set(mouseX);
         }
 
@@ -41,7 +40,7 @@ public class Slider extends Component {
 
     @Override
     public void mouseClicked(double mouseX, double mouseY, int button) {
-        if (button == MouseUtil.LEFT_CLICK && isMouseInBounds(mouseX, mouseY)) {
+        if (button == InputUtil.LEFT_CLICK && isMouseInBounds(mouseX, mouseY)) {
             set(mouseX);
         }
     }

@@ -9,7 +9,7 @@ import cope.saturn.core.settings.Bind;
 import cope.saturn.core.settings.Setting;
 import cope.saturn.core.ui.click.components.Component;
 import cope.saturn.core.ui.click.components.impl.Slider;
-import cope.saturn.util.input.MouseUtil;
+import cope.saturn.util.input.InputUtil;
 import cope.saturn.util.render.RenderUtil;
 import cope.saturn.util.render.TextUtil;
 import net.minecraft.client.util.math.MatrixStack;
@@ -112,13 +112,13 @@ public class DropdownButton extends Button {
 
     @Override
     public void onInteract(int button) {
-        if (button == MouseUtil.LEFT_CLICK) {
+        if (button == InputUtil.LEFT_CLICK) {
             if (setting.getValue() instanceof Boolean) {
                 setting.setValue(!(boolean) setting.getValue());
             } else if (setting.getValue() instanceof Enum) {
                 setting.setValue(Setting.current((Enum) setting.getValue()));
             }
-        } else if (button == MouseUtil.RIGHT_CLICK) {
+        } else if (button == InputUtil.RIGHT_CLICK) {
             expanded = !expanded;
         }
     }

@@ -8,7 +8,7 @@ package cope.saturn.core.ui.click.components;
 import cope.saturn.core.features.module.Category;
 import cope.saturn.core.features.module.Module;
 import cope.saturn.core.ui.click.components.impl.button.ModuleButton;
-import cope.saturn.util.input.MouseUtil;
+import cope.saturn.util.input.InputUtil;
 import cope.saturn.util.render.RenderUtil;
 import cope.saturn.util.render.TextUtil;
 import net.minecraft.client.util.math.MatrixStack;
@@ -69,12 +69,12 @@ public class Frame extends Component {
     @Override
     public void mouseClicked(double mouseX, double mouseY, int button) {
         if (isMouseInBounds(mouseX, mouseY)) {
-            if (button == MouseUtil.LEFT_CLICK) {
+            if (button == InputUtil.LEFT_CLICK) {
                 dragging = true;
 
                 dragX = x - mouseX;
                 dragY = y - mouseY;
-            } else if (button == MouseUtil.RIGHT_CLICK) {
+            } else if (button == InputUtil.RIGHT_CLICK) {
                 expanded = !expanded;
             }
         }
@@ -88,7 +88,7 @@ public class Frame extends Component {
 
     @Override
     public void mouseReleased(double mouseX, double mouseY, int button) {
-        if (button == MouseUtil.LEFT_CLICK && dragging) {
+        if (button == InputUtil.LEFT_CLICK && dragging) {
             dragging = false;
         }
     }

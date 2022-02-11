@@ -6,8 +6,8 @@
 package cope.saturn.core.ui.click.components.impl.button;
 
 import cope.saturn.core.settings.Bind;
+import cope.saturn.util.input.InputUtil;
 import cope.saturn.util.render.TextUtil;
-import net.minecraft.client.util.InputUtil;
 import net.minecraft.client.util.math.MatrixStack;
 import org.lwjgl.glfw.GLFW;
 
@@ -27,9 +27,7 @@ public class BindButton extends Button {
         if (listening) {
             text = "Listening...";
         } else {
-            text = getName() + " " + (bind.getValue() == GLFW.GLFW_KEY_UNKNOWN ?
-                    "NONE" :
-                    GLFW.glfwGetKeyName(bind.getValue(), GLFW.glfwGetKeyScancode(bind.getValue())));
+            text = getName() + " " + InputUtil.getKeyName(bind.getValue());
         }
 
         mc.textRenderer.draw(matrixStack, text, (float) (x + 2.3), (float) TextUtil.alignH(y, height), -1);

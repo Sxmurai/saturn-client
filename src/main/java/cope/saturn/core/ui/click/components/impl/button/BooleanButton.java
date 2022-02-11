@@ -6,7 +6,7 @@
 package cope.saturn.core.ui.click.components.impl.button;
 
 import cope.saturn.core.settings.Setting;
-import cope.saturn.util.input.MouseUtil;
+import cope.saturn.util.input.InputUtil;
 import cope.saturn.util.render.RenderUtil;
 import cope.saturn.util.render.TextUtil;
 import net.minecraft.client.util.math.MatrixStack;
@@ -42,7 +42,7 @@ public class BooleanButton extends Button {
 
     @Override
     public void onInteract(int button) {
-        if (button == MouseUtil.LEFT_CLICK) {
+        if (button == InputUtil.LEFT_CLICK) {
             setting.setValue(!setting.getValue());
         }
     }
