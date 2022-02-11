@@ -21,8 +21,8 @@ public class Velocity extends Module {
         super("Velocity", Category.MOVEMENT, "Ignores server velocity");
     }
 
-    public static final Setting<Float> vertical = new Setting<>("Vertical", 100.0f, 0.0f, 100.0f);
-    public static final Setting<Float> horizontal = new Setting<>("Vertical", 100.0f, 0.0f, 100.0f);
+    public static final Setting<Float> vertical = new Setting<>("Vertical", 0.0f, 0.0f, 100.0f);
+    public static final Setting<Float> horizontal = new Setting<>("Vertical", 0.0f, 0.0f, 100.0f);
 
     public static final Setting<Boolean> blocks = new Setting<>("Blocks", true);
 
@@ -33,13 +33,13 @@ public class Velocity extends Module {
                 return;
             }
 
-            ((IEntityVelocityUpdateS2CPacket) packet).setVelocityX(packet.getVelocityX() / horizontal.getValue().intValue());
-            ((IEntityVelocityUpdateS2CPacket) packet).setVelocityY(packet.getVelocityY() / vertical.getValue().intValue());
-            ((IEntityVelocityUpdateS2CPacket) packet).setVelocityZ(packet.getVelocityZ() / horizontal.getValue().intValue());
+            ((IEntityVelocityUpdateS2CPacket) packet).setVelocityX(packet.getVelocityX() * horizontal.getValue().intValue());
+            ((IEntityVelocityUpdateS2CPacket) packet).setVelocityY(packet.getVelocityY() * vertical.getValue().intValue());
+            ((IEntityVelocityUpdateS2CPacket) packet).setVelocityZ(packet.getVelocityZ() * horizontal.getValue().intValue());
         } else if (event.getPacket() instanceof ExplosionS2CPacket packet) {
-            ((IExplosionS2CPacket) packet).setPlayerVelocityX(packet.getPlayerVelocityX() / horizontal.getValue());
-            ((IExplosionS2CPacket) packet).setPlayerVelocityY(packet.getPlayerVelocityY() / vertical.getValue());
-            ((IExplosionS2CPacket) packet).setPlayerVelocityZ(packet.getPlayerVelocityZ() / horizontal.getValue());
+            ((IExplosionS2CPacket) packet).setPlayerVelocityX(packet.getPlayerVelocityX() * horizontal.getValue());
+            ((IExplosionS2CPacket) packet).setPlayerVelocityY(packet.getPlayerVelocityY() * vertical.getValue());
+            ((IExplosionS2CPacket) packet).setPlayerVelocityZ(packet.getPlayerVelocityZ() * horizontal.getValue());
         }
     }
 
