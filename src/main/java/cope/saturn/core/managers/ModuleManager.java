@@ -10,6 +10,7 @@ import cope.saturn.core.events.KeyPressedEvent;
 import cope.saturn.core.features.module.Module;
 import cope.saturn.core.features.module.client.ClickGUI;
 import cope.saturn.core.features.module.combat.*;
+import cope.saturn.core.features.module.miscellaneous.PingSpoof;
 import cope.saturn.core.features.module.movement.NoSlow;
 import cope.saturn.core.features.module.movement.Sprint;
 import cope.saturn.core.features.module.movement.Velocity;
@@ -40,6 +41,9 @@ public class ModuleManager implements Wrapper {
         modules.add(new AutoTotem());
         modules.add(new BowRelease());
         modules.add(new Criticals());
+
+        // Miscellaneous
+        modules.add(new PingSpoof());
 
         // Movement
         modules.add(new NoSlow());

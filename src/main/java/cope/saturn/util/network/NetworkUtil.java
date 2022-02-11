@@ -14,6 +14,6 @@ public class NetworkUtil implements Wrapper {
     }
 
     public static void sendPacketNoEvent(Packet<?> packet) {
-
+        mc.player.networkHandler.getConnection().send(packet);
     }
 }
