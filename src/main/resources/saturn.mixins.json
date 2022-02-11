@@ -10,6 +10,7 @@
 
     "entity.MixinClientPlayerEntity",
 
+    "input.MixinClientPlayerInteractionManager",
     "input.MixinKeyboard",
 
     "network.packet.c2s.IPlayerInteractEntityC2SPacket",

@@ -16,9 +16,7 @@ import cope.saturn.core.features.module.movement.NoSlow;
 import cope.saturn.core.features.module.movement.Sprint;
 import cope.saturn.core.features.module.movement.Velocity;
 import cope.saturn.core.features.module.visuals.Fullbright;
-import cope.saturn.core.features.module.world.AutoFish;
-import cope.saturn.core.features.module.world.Scaffold;
-import cope.saturn.core.features.module.world.Timer;
+import cope.saturn.core.features.module.world.*;
 import cope.saturn.util.internal.Wrapper;
 import me.bush.eventbus.annotation.EventListener;
 import org.lwjgl.glfw.GLFW;
@@ -58,7 +56,9 @@ public class ModuleManager implements Wrapper {
 
         // World
         modules.add(new AutoFish());
+        modules.add(new AutoTool());
         modules.add(new Scaffold());
+        modules.add(new SpeedMine());
         modules.add(new Timer());
 
         // register all settings
