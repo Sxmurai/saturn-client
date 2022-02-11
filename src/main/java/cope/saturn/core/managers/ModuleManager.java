@@ -11,6 +11,7 @@ import cope.saturn.core.features.module.Module;
 import cope.saturn.core.features.module.client.ClickGUI;
 import cope.saturn.core.features.module.combat.*;
 import cope.saturn.core.features.module.miscellaneous.PingSpoof;
+import cope.saturn.core.features.module.movement.AntiVoid;
 import cope.saturn.core.features.module.movement.NoSlow;
 import cope.saturn.core.features.module.movement.Sprint;
 import cope.saturn.core.features.module.movement.Velocity;
@@ -46,6 +47,7 @@ public class ModuleManager implements Wrapper {
         modules.add(new PingSpoof());
 
         // Movement
+        modules.add(new AntiVoid());
         modules.add(new NoSlow());
         modules.add(new Sprint());
         modules.add(new Velocity());
