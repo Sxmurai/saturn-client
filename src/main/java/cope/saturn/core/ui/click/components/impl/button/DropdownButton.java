@@ -8,6 +8,7 @@ package cope.saturn.core.ui.click.components.impl.button;
 import cope.saturn.core.settings.Bind;
 import cope.saturn.core.settings.Setting;
 import cope.saturn.core.ui.click.components.Component;
+import cope.saturn.core.ui.click.components.impl.Slider;
 import cope.saturn.util.input.MouseUtil;
 import cope.saturn.util.render.RenderUtil;
 import cope.saturn.util.render.TextUtil;
@@ -36,6 +37,8 @@ public class DropdownButton extends Button {
                     children.add(new BooleanButton(child));
                 } else if (child.getValue() instanceof Enum) {
                     children.add(new EnumButton(child));
+                } else if (child.getValue() instanceof Number) {
+                    children.add(new Slider(child));
                 }
             }
         });

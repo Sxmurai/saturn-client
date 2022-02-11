@@ -9,6 +9,7 @@ import cope.saturn.core.features.module.Module;
 import cope.saturn.core.settings.Bind;
 import cope.saturn.core.settings.Setting;
 import cope.saturn.core.ui.click.components.Component;
+import cope.saturn.core.ui.click.components.impl.Slider;
 import cope.saturn.util.input.MouseUtil;
 import cope.saturn.util.render.RenderUtil;
 import cope.saturn.util.render.TextUtil;
@@ -44,6 +45,8 @@ public class ModuleButton extends Button {
                 children.add(new BooleanButton(setting));
             } else if (setting.getValue() instanceof Enum) {
                 children.add(new EnumButton(setting));
+            } else if (setting.getValue() instanceof Number) {
+                children.add(new Slider(setting));
             }
         }
     }
