@@ -5,11 +5,14 @@
 
 package cope.saturn.core.features.command.impl;
 
+import com.mojang.authlib.GameProfile;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import cope.saturn.core.features.command.Command;
 import cope.saturn.util.internal.ChatUtil;
 import net.minecraft.client.network.OtherClientPlayerEntity;
 import net.minecraft.entity.Entity;
+
+import java.util.UUID;
 
 public class FakePlayer extends Command {
     private static OtherClientPlayerEntity fakePlayer;
@@ -23,7 +26,7 @@ public class FakePlayer extends Command {
 
                         ChatUtil.send("Despawned fake player.");
                     } else {
-                        fakePlayer = new OtherClientPlayerEntity(mc.world, mc.player.getGameProfile());
+                        fakePlayer = new OtherClientPlayerEntity(mc.world, new GameProfile(UUID.randomUUID(), "FakePlayer"));
                         fakePlayer.copyPositionAndRotation(mc.player);
                         fakePlayer.getInventory().clone(mc.player.getInventory());
                         fakePlayer.setId(-133769420);
