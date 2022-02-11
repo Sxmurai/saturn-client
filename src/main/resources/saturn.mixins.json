@@ -19,6 +19,9 @@
     "network.packet.s2c.IExplosionS2CPacket",
     "network.MixinClientConnection",
 
+    "render.gui.MixinGuiInGameOverlayRenderer",
+    "render.MixinGameRenderer",
+    "render.MixinParticleManager",
     "render.MixinPlayerEntityRenderer"
   ],
   "injectors": {

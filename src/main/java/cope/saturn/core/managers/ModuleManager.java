@@ -16,6 +16,7 @@ import cope.saturn.core.features.module.movement.NoSlow;
 import cope.saturn.core.features.module.movement.Sprint;
 import cope.saturn.core.features.module.movement.Velocity;
 import cope.saturn.core.features.module.visuals.Fullbright;
+import cope.saturn.core.features.module.visuals.NoRender;
 import cope.saturn.core.features.module.world.*;
 import cope.saturn.util.internal.Wrapper;
 import me.bush.eventbus.annotation.EventListener;
@@ -53,6 +54,7 @@ public class ModuleManager implements Wrapper {
 
         // Visuals
         modules.add(new Fullbright());
+        modules.add(new NoRender());
 
         // World
         modules.add(new AutoFish());
