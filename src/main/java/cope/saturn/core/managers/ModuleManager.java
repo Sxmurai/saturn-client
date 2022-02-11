@@ -42,6 +42,7 @@ public class ModuleManager implements Wrapper {
         modules.add(new AutoTotem());
         modules.add(new BowRelease());
         modules.add(new Criticals());
+        modules.add(new FeetTrap());
 
         // Miscellaneous
         modules.add(new PingSpoof());
