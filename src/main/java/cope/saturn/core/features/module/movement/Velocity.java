@@ -33,20 +33,10 @@ public class Velocity extends Module {
                 return;
             }
 
-            if (vertical.getValue() == 100.0f && horizontal.getValue() == 100.0f) {
-                event.setCancelled(true);
-                return;
-            }
-
             ((IEntityVelocityUpdateS2CPacket) packet).setVelocityX(packet.getVelocityX() / horizontal.getValue().intValue());
             ((IEntityVelocityUpdateS2CPacket) packet).setVelocityY(packet.getVelocityY() / vertical.getValue().intValue());
             ((IEntityVelocityUpdateS2CPacket) packet).setVelocityZ(packet.getVelocityZ() / horizontal.getValue().intValue());
         } else if (event.getPacket() instanceof ExplosionS2CPacket packet) {
-            if (vertical.getValue() == 100.0f && horizontal.getValue() == 100.0f) {
-                event.setCancelled(true);
-                return;
-            }
-
             ((IExplosionS2CPacket) packet).setPlayerVelocityX(packet.getPlayerVelocityX() / horizontal.getValue());
             ((IExplosionS2CPacket) packet).setPlayerVelocityY(packet.getPlayerVelocityY() / vertical.getValue());
             ((IExplosionS2CPacket) packet).setPlayerVelocityZ(packet.getPlayerVelocityZ() / horizontal.getValue());
