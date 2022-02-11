@@ -29,6 +29,8 @@ public class AutoTotem extends Module {
 
     @Override
     protected void onDisable() {
+        super.onDisable();
+
         handler.clear();
     }
 
