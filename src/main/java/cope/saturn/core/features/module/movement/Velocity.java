@@ -22,7 +22,7 @@ public class Velocity extends Module {
     }
 
     public static final Setting<Float> vertical = new Setting<>("Vertical", 0.0f, 0.0f, 100.0f);
-    public static final Setting<Float> horizontal = new Setting<>("Vertical", 0.0f, 0.0f, 100.0f);
+    public static final Setting<Float> horizontal = new Setting<>("Horizontal", 0.0f, 0.0f, 100.0f);
 
     public static final Setting<Boolean> blocks = new Setting<>("Blocks", true);
 
