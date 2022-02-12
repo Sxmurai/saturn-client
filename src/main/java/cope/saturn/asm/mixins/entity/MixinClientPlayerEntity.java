@@ -8,6 +8,7 @@ package cope.saturn.asm.mixins.entity;
 import com.mojang.authlib.GameProfile;
 import cope.saturn.core.Saturn;
 import cope.saturn.core.events.ItemSlowdownEvent;
+import cope.saturn.core.events.MotionEvent;
 import cope.saturn.core.events.PushOutOfBlocksEvent;
 import cope.saturn.core.events.SendMovementPacketsEvent;
 import cope.saturn.util.network.NetworkUtil;
@@ -16,6 +17,7 @@ import net.minecraft.client.input.Input;
 import net.minecraft.client.network.AbstractClientPlayerEntity;
 import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.client.world.ClientWorld;
+import net.minecraft.entity.MovementType;
 import net.minecraft.network.packet.c2s.play.ClientCommandC2SPacket;
 import net.minecraft.network.packet.c2s.play.PlayerMoveC2SPacket;
 import net.minecraft.util.math.Vec3d;
@@ -105,6 +107,16 @@ public abstract class MixinClientPlayerEntity extends AbstractClientPlayerEntity
     @Inject(method = "pushOutOfBlocks", at = @At("HEAD"), cancellable = true)
     public void pushOutOfBlocks(double x, double z, CallbackInfo info) {
         PushOutOfBlocksEvent event = new PushOutOfBlocksEvent();
+        Saturn.EVENT_BUS.post(event);
+
+        if (event.isCancelled()) {
+            info.cancel();
+        }
+    }
+
+    @Inject(method = "move", at = @At("HEAD"), cancellable = true)
+    public void move(MovementType movementType, Vec3d movement, CallbackInfo info) {
+        MotionEvent event = new MotionEvent(movementType, movement);
         Saturn.EVENT_BUS.post(event);
 
         if (event.isCancelled()) {
