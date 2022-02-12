@@ -16,6 +16,7 @@ import cope.saturn.core.features.module.movement.NoSlow;
 import cope.saturn.core.features.module.movement.Sprint;
 import cope.saturn.core.features.module.movement.Velocity;
 import cope.saturn.core.features.module.visuals.CameraClip;
+import cope.saturn.core.features.module.visuals.Chams;
 import cope.saturn.core.features.module.visuals.Fullbright;
 import cope.saturn.core.features.module.visuals.NoRender;
 import cope.saturn.core.features.module.world.*;
@@ -55,6 +56,7 @@ public class ModuleManager implements Wrapper {
 
         // Visuals
         modules.add(new CameraClip());
+        modules.add(new Chams());
         modules.add(new Fullbright());
         modules.add(new NoRender());
 

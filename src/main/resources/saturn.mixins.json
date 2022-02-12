@@ -19,6 +19,7 @@
     "network.packet.s2c.IExplosionS2CPacket",
     "network.MixinClientConnection",
 
+    "render.entity.MixinLivingEntityRenderer",
     "render.gui.MixinInGameOverlayRenderer",
     "render.MixinCamera",
     "render.MixinGameRenderer",
