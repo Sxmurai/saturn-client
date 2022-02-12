@@ -10,10 +10,6 @@ archivesBaseName = project.archives_base_name
 version = project.mod_version
 group = project.maven_group
 
-loom {
-	accessWidenerPath = file("src/main/resources/saturn.accesswidener")
-}
-
 repositories {
 	maven {
 		name = "meteor-maven-snapshots"
@@ -40,18 +36,21 @@ dependencies {
 	modImplementation "baritone:baritone:${project.baritone_version}"
 	include "baritone:baritone:${project.baritone_version}"
 
-	// cannot add multiconnect for now
-	// https://github.com/Earthcomputer/multiconnect/issues/324
-//
-//	// add multiconnect (connects to older versions of minecraft)
-//	modImplementation "net.earthcomputer.multiconnect:multiconnect-api:${project.multiconnect_version}"
-//	modRuntimeOnly "net.earthcomputer.multiconnect:multiconnect-slim:${project.multiconnect_version}"
-//
-//	dep "net.earthcomputer.multiconnect:multiconnect-api:${project.multiconnect_version}"
+	// add multiconnect (connects to older versions of minecraft)
+	modImplementation("net.earthcomputer.multiconnect:multiconnect-api:${project.multiconnect_version}") {
+		transitive = false
+	}
+
+	include "net.earthcomputer.multiconnect:multiconnect-api:${project.multiconnect_version}"
 
 	// add libs needed from JARs (pretty much only bush's event bus)
 	dep fileTree(include: ['*.jar'], dir: 'libs')
 }
+
+loom {
+	accessWidenerPath = file("src/main/resources/saturn.accesswidener")
+}
+
 
 shadowJar {
 	configurations = [ project.configurations.shadow ]
