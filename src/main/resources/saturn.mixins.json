@@ -20,6 +20,7 @@
     "network.MixinClientConnection",
 
     "render.entity.MixinLivingEntityRenderer",
+    "render.gui.MixinInGameHud",
     "render.gui.MixinInGameOverlayRenderer",
     "render.MixinCamera",
     "render.MixinGameRenderer",

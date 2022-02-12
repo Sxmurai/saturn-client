@@ -5,10 +5,7 @@
 
 package cope.saturn.core;
 
-import cope.saturn.core.managers.CommandManager;
-import cope.saturn.core.managers.InventoryManager;
-import cope.saturn.core.managers.ModuleManager;
-import cope.saturn.core.managers.RotationManager;
+import cope.saturn.core.managers.*;
 import cope.saturn.core.managers.interaction.InteractionManager;
 import me.bush.eventbus.bus.EventBus;
 import me.bush.eventbus.handler.handlers.ReflectHandler;
@@ -28,6 +25,7 @@ public class Saturn implements ClientModInitializer {
 
     private ModuleManager moduleManager;
     private CommandManager commandManager;
+    private HUDManager hudManager;
 
     private InventoryManager inventoryManager;
     private RotationManager rotationManager;
@@ -39,6 +37,7 @@ public class Saturn implements ClientModInitializer {
 
         moduleManager = new ModuleManager();
         commandManager = new CommandManager();
+        hudManager = new HUDManager();
 
         inventoryManager = new InventoryManager();
         rotationManager = new RotationManager();
@@ -47,6 +46,14 @@ public class Saturn implements ClientModInitializer {
 
     public ModuleManager getModuleManager() {
         return moduleManager;
+    }
+
+    public CommandManager getCommandManager() {
+        return commandManager;
+    }
+
+    public HUDManager getHudManager() {
+        return hudManager;
     }
 
     public InventoryManager getInventoryManager() {
