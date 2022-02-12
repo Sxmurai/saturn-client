@@ -6,9 +6,10 @@
 package cope.saturn.util.render;
 
 import com.mojang.blaze3d.systems.RenderSystem;
+import cope.saturn.util.internal.Wrapper;
 import net.minecraft.client.render.*;
 
-public class RenderUtil {
+public class RenderUtil implements Wrapper {
     /**
      * Draws a rectangle to the screen
      * @param x The x coordinate
@@ -37,5 +38,9 @@ public class RenderUtil {
 
         RenderSystem.enableTexture();
         RenderSystem.disableBlend();
+    }
+
+    public static void line(double startX, double startY, double startZ, double endX, double endY, double endZ, float width, int color) {
+
     }
 }
