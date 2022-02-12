@@ -10,6 +10,7 @@ import cope.saturn.core.events.KeyPressedEvent;
 import cope.saturn.core.features.module.Module;
 import cope.saturn.core.features.module.client.ClickGUI;
 import cope.saturn.core.features.module.client.HUD;
+import cope.saturn.core.features.module.client.HUDEditor;
 import cope.saturn.core.features.module.combat.*;
 import cope.saturn.core.features.module.miscellaneous.PingSpoof;
 import cope.saturn.core.features.module.movement.AntiVoid;
@@ -37,6 +38,7 @@ public class ModuleManager implements Wrapper {
         // Client
         modules.add(new ClickGUI());
         modules.add(new HUD());
+        modules.add(new HUDEditor());
 
         // Combat
         modules.add(new AimBot());
