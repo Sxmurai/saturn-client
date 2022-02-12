@@ -9,6 +9,7 @@ import cope.saturn.core.Saturn;
 import cope.saturn.core.events.RenderHUDEvent;
 import cope.saturn.core.features.hud.HUDElement;
 import cope.saturn.core.features.hud.client.Watermark;
+import cope.saturn.core.features.module.client.HUD;
 import cope.saturn.util.internal.Wrapper;
 import me.bush.eventbus.annotation.EventListener;
 
@@ -30,7 +31,7 @@ public class HUDManager implements Wrapper {
     @EventListener
     public void onRenderHud(RenderHUDEvent event) {
         // do not render while F3 is open
-        if (!mc.options.debugEnabled) {
+        if (!mc.options.debugEnabled && HUD.INSTANCE.isToggled()) {
             elements.forEach((element) -> {
                 if (element.isEnabled()) {
                     element.render(event.getStack());
