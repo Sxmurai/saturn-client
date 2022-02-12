@@ -65,6 +65,7 @@ public class ModuleManager implements Wrapper {
         modules.add(new NoRender());
 
         // World
+        modules.add(new AntiHunger());
         modules.add(new AutoFish());
         modules.add(new AutoTool());
         modules.add(new Scaffold());

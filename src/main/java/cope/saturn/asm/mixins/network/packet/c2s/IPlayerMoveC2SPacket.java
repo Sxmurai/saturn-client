@@ -19,4 +19,8 @@ public interface IPlayerMoveC2SPacket {
     @Mutable
     @Accessor("pitch")
     void setPitch(float pitch);
+
+    @Mutable
+    @Accessor("onGround")
+    void setOnGround(boolean onGround);
 }
