@@ -5,7 +5,7 @@
 
 package cope.saturn.core.features.module.combat;
 
-import cope.saturn.asm.mixins.network.packet.c2s.IPlayerInteractEntityC2SPacket;
+import cope.saturn.asm.duck.IPlayerInteractEntityC2SPacket;
 import cope.saturn.core.events.ClientTickEvent;
 import cope.saturn.core.events.PacketEvent;
 import cope.saturn.core.features.module.Category;
@@ -21,7 +21,6 @@ import cope.saturn.util.world.BlockUtil;
 import cope.saturn.util.world.combat.CrystalUtil;
 import cope.saturn.util.world.combat.DamagesUtil;
 import me.bush.eventbus.annotation.EventListener;
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.decoration.EndCrystalEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Items;
@@ -101,17 +100,17 @@ public class AutoCrystal extends Module {
 
     @EventListener
     public void onPacketSend(PacketEvent.Send event) {
-        if (event.getPacket() instanceof PlayerInteractEntityC2SPacket packet) {
+        if (event.getPacket() instanceof IPlayerInteractEntityC2SPacket packet) {
             if (!sync.getValue().equals(Sync.INSTANT)) {
                 return;
             }
 
-            if (((IPlayerInteractEntityC2SPacket) packet).getType().equals(PlayerInteractEntityC2SPacket.InteractType.ATTACK)) {
-                if (mc.world.getEntityById(((IPlayerInteractEntityC2SPacket) packet).getEntityId()) instanceof EndCrystalEntity crystalEntity) {
-                    if (attackCrystal != null && attackCrystal.equals(crystalEntity)) {
-                        crystalEntity.kill();
-                        attackCrystal = null;
-                    }
+            if (packet.getType().equals(PlayerInteractEntityC2SPacket.InteractType.ATTACK) &&
+                    packet.getEntity() instanceof EndCrystalEntity crystalEntity) {
+
+                if (attackCrystal != null && attackCrystal.equals(crystalEntity)) {
+                    crystalEntity.kill();
+                    attackCrystal = null;
                 }
             }
         }

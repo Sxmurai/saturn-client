@@ -5,13 +5,14 @@
 
 package cope.saturn.core.features.module.combat;
 
-import cope.saturn.asm.mixins.network.packet.c2s.IPlayerInteractEntityC2SPacket;
+import cope.saturn.asm.duck.IPlayerInteractEntityC2SPacket;
 import cope.saturn.core.events.PacketEvent;
 import cope.saturn.core.features.module.Category;
 import cope.saturn.core.features.module.Module;
 import cope.saturn.core.settings.Setting;
 import cope.saturn.util.network.NetworkUtil;
 import me.bush.eventbus.annotation.EventListener;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.network.packet.c2s.play.PlayerInteractEntityC2SPacket;
 import net.minecraft.network.packet.c2s.play.PlayerMoveC2SPacket;
 import net.minecraft.util.math.Vec3d;
@@ -25,9 +26,9 @@ public class Criticals extends Module {
 
     @EventListener
     public void onPacketSend(PacketEvent.Send event) {
-        if (event.getPacket() instanceof PlayerInteractEntityC2SPacket packet) {
+        if (event.getPacket() instanceof IPlayerInteractEntityC2SPacket packet) {
             // fuck you mojang
-            if (((IPlayerInteractEntityC2SPacket) packet).getType().getType().equals(PlayerInteractEntityC2SPacket.InteractType.ATTACK)) {
+            if (packet.getType().equals(PlayerInteractEntityC2SPacket.InteractType.ATTACK) && packet.getEntity() instanceof LivingEntity) {
                 if (!mc.player.isOnGround()) {
                     return;
                 }

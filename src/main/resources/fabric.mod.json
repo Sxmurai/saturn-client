@@ -29,6 +29,8 @@
     "saturn.mixins.json"
   ],
 
+  "accessWidener": "saturn.accesswidener",
+
   "depends": {
     "fabricloader": ">=0.12.12",
     "minecraft": "1.18.x",
