@@ -34,7 +34,7 @@ public class CrystalUtil implements Wrapper {
         }
 
         for (Entity entity : mc.world.getNonSpectatingEntities(Entity.class, new Box(boost))) {
-            if (!entity.isAlive()) {
+            if (!entity.isAlive() || entity instanceof EndCrystalEntity) {
                 continue;
             }
 
@@ -43,7 +43,7 @@ public class CrystalUtil implements Wrapper {
 
         if (placement.equals(Placement.OLD)) {
             for (Entity entity : mc.world.getNonSpectatingEntities(Entity.class, new Box(nextBoost))) {
-                if (!entity.isAlive()) {
+                if (!entity.isAlive() || entity instanceof EndCrystalEntity) {
                     continue;
                 }
 
