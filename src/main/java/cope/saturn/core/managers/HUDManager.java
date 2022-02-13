@@ -9,6 +9,7 @@ import cope.saturn.core.Saturn;
 import cope.saturn.core.events.RenderHUDEvent;
 import cope.saturn.core.features.hud.HUDElement;
 import cope.saturn.core.features.hud.client.Watermark;
+import cope.saturn.core.features.hud.player.Armor;
 import cope.saturn.core.features.module.client.HUD;
 import cope.saturn.util.internal.Wrapper;
 import me.bush.eventbus.annotation.EventListener;
@@ -24,6 +25,9 @@ public class HUDManager implements Wrapper {
 
         // client
         elements.add(new Watermark());
+
+        // player
+        elements.add(new Armor());
 
         Saturn.LOGGER.info("Loaded {} hud elements", elements.size());
     }
