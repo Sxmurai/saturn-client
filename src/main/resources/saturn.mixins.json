@@ -17,11 +17,15 @@
 
     "network.packet.c2s.IPlayerMoveC2SPacket",
     "network.packet.c2s.MixinPlayerInteractEntityC2SPacket",
+    "network.packet.s2c.IEntityS2CPacket",
+    "network.packet.s2c.IEntityStatusS2CPacket",
     "network.packet.s2c.IEntityVelocityUpdateS2CPacket",
     "network.packet.s2c.IExplosionS2CPacket",
     "network.MixinClientConnection",
+    "network.MixinClientPlayNetworkHandler",
 
     "render.entity.MixinLivingEntityRenderer",
+    "render.gui.IChatHud",
     "render.gui.MixinInGameHud",
     "render.gui.MixinInGameOverlayRenderer",
     "render.MixinCamera",
