@@ -98,8 +98,6 @@ public class AutoCrystal extends Module {
                 if (mc.world.getEntityById(((IPlayerInteractEntityC2SPacket) packet).getEntityId()) instanceof EndCrystalEntity crystalEntity) {
                     if (attackCrystal != null && attackCrystal.equals(crystalEntity)) {
                         crystalEntity.kill();
-                        mc.world.removeEntity(attackCrystal.getId(), Entity.RemovalReason.KILLED);
-
                         attackCrystal = null;
                     }
                 }
@@ -122,8 +120,6 @@ public class AutoCrystal extends Module {
 
                     if (entity.squaredDistanceTo(packet.getX(), packet.getY(), packet.getZ()) < 12.0) {
                         entity.kill();
-                        mc.world.removeEntity(entity.getId(), Entity.RemovalReason.KILLED);
-
                         if (attackCrystal != null && attackCrystal.equals(crystal)) {
                             attackCrystal = null;
                         }
@@ -138,8 +134,6 @@ public class AutoCrystal extends Module {
 
                 if (entity.squaredDistanceTo(packet.getX(), packet.getY(), packet.getZ()) < packet.getRadius() * packet.getRadius()) {
                     entity.kill();
-                    mc.world.removeEntity(entity.getId(), Entity.RemovalReason.KILLED);
-
                     if (attackCrystal != null && attackCrystal.equals(crystal)) {
                         attackCrystal = null;
                     }
