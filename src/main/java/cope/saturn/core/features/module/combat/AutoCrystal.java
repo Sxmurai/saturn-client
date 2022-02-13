@@ -10,8 +10,10 @@ import cope.saturn.core.events.ClientTickEvent;
 import cope.saturn.core.events.PacketEvent;
 import cope.saturn.core.features.module.Category;
 import cope.saturn.core.features.module.Module;
+import cope.saturn.core.managers.InventoryManager;
 import cope.saturn.core.settings.Setting;
 import cope.saturn.util.entity.EntityUtil;
+import cope.saturn.util.entity.player.inventory.InventoryUtil;
 import cope.saturn.util.entity.player.rotation.RotationType;
 import cope.saturn.util.entity.player.rotation.RotationUtil;
 import cope.saturn.util.internal.Stopwatch;
@@ -22,6 +24,7 @@ import me.bush.eventbus.annotation.EventListener;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.decoration.EndCrystalEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.Items;
 import net.minecraft.network.packet.c2s.play.PlayerInteractEntityC2SPacket;
 import net.minecraft.network.packet.s2c.play.ExplosionS2CPacket;
 import net.minecraft.network.packet.s2c.play.PlaySoundS2CPacket;
@@ -67,6 +70,8 @@ public class AutoCrystal extends Module {
 
     public static final Setting<Sync> sync = new Setting<>("Sync", Sync.SOUND);
 
+    public static final Setting<InventoryManager.Swap> swap = new Setting<>("Swap", InventoryManager.Swap.CLIENT);
+
     private PlayerEntity target = null;
     private final List<EndCrystalEntity> explodable = new CopyOnWriteArrayList<>();
 
@@ -75,6 +80,9 @@ public class AutoCrystal extends Module {
 
     private final Stopwatch placeTimer = new Stopwatch();
     private final Stopwatch explodeTimer = new Stopwatch();
+
+    private int oldSlot = -1;
+    private Hand hand;
 
     @Override
     protected void onDisable() {
@@ -85,6 +93,10 @@ public class AutoCrystal extends Module {
 
         placePosition = null;
         attackCrystal = null;
+
+        if (!nullCheck() && oldSlot != -1) {
+            swapBack();
+        }
     }
 
     @EventListener
@@ -154,17 +166,31 @@ public class AutoCrystal extends Module {
         if (place.getValue()) {
             findPlacePosition();
 
-            if (placePosition != null && placeTimer.getPassedMs() / 50.0f >= 20.0f - placeSpeed.getValue()) {
-                placeTimer.reset();
+            if (placePosition != null) {
+                // we only want to swap when theres a valid crystal
+                swapToCrystal();
+                if (hand == null) {
+                    return;
+                }
 
-                // TODO: limit rotations
-                RotationUtil.rotation(new Vec3d(placePosition.getX(), placePosition.getY(), placePosition.getZ()))
-                        .type(rotate.getValue().type)
-                        .send(false);
+                if (placeTimer.getPassedMs() / 50.0f >= 20.0f - placeSpeed.getValue()) {
+                    placeTimer.reset();
 
-                // place
-                getSaturn().getInteractionManager().placeCrystal(
-                        placePosition, Hand.MAIN_HAND, true, raycast.getValue(), strictDirection.getValue());
+                    // TODO: limit rotations
+                    RotationUtil.rotation(new Vec3d(placePosition.getX(), placePosition.getY(), placePosition.getZ()))
+                            .type(rotate.getValue().type)
+                            .send(false);
+
+                    // place
+                    getSaturn().getInteractionManager().placeCrystal(
+                            placePosition, hand, true, raycast.getValue(), strictDirection.getValue());
+
+                    // we need to swap back for silent swap
+                    if (swap.getValue().equals(InventoryManager.Swap.PACKET) && hand.equals(Hand.MAIN_HAND)) {
+                        swapBack();
+                        hand = Hand.MAIN_HAND;
+                    }
+                }
             }
         }
 
@@ -321,6 +347,42 @@ public class AutoCrystal extends Module {
         }
 
         target = possibleTarget;
+    }
+
+    private void swapToCrystal() {
+        if (!swap.getValue().equals(InventoryManager.Swap.NONE)) {
+            int slot = InventoryUtil.getSlot(Items.END_CRYSTAL, true);
+            if (slot == -1) {
+                hand = null;
+                return;
+            }
+
+            hand = slot == InventoryUtil.OFFHAND_SLOT ? Hand.OFF_HAND : Hand.MAIN_HAND;
+            if (hand.equals(Hand.MAIN_HAND)) {
+                oldSlot = mc.player.getInventory().selectedSlot;
+                getSaturn().getInventoryManager().swap(slot, swap.getValue());
+            }
+        } else {
+            if (!InventoryUtil.isHolding(Items.END_CRYSTAL, true)) {
+                hand = null;
+                return;
+            }
+
+            if (mc.player.getOffHandStack().getItem().equals(Items.END_CRYSTAL)) {
+                hand = Hand.OFF_HAND;
+            } else {
+                hand = Hand.MAIN_HAND;
+            }
+        }
+    }
+
+    private void swapBack() {
+        if (oldSlot != -1) {
+            getSaturn().getInventoryManager().swap(oldSlot, swap.getValue());
+        }
+
+        oldSlot = -1;
+        hand = null;
     }
 
     public enum Rotate {
