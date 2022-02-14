@@ -12,7 +12,6 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.effect.StatusEffects;
-import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.explosion.Explosion;
@@ -76,7 +75,7 @@ public class DamagesUtil implements Wrapper {
         damage *= 1.0f - eof / 25.0f;
 
         if (target.hasStatusEffect(StatusEffects.RESISTANCE)) {
-            damage = (float) (damage * (25.0f - (target.getStatusEffect(StatusEffects.RESISTANCE).getAmplifier() + 1) * 5.0) / 25.0f);
+            damage -= damage / 4.0f;
         }
 
         return damage;
