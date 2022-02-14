@@ -52,6 +52,7 @@ public class ModuleManager implements Wrapper {
         modules.add(new AntiVoid());
         modules.add(new EntitySpeed());
         modules.add(new Flight());
+        modules.add(new Jesus());
         modules.add(new NoSlow());
         modules.add(new Speed());
         modules.add(new Sprint());

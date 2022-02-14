@@ -34,7 +34,8 @@
     "render.MixinPlayerEntityRenderer",
 
     "world.MixinAbstractBlockState",
-    "world.MixinBlock"
+    "world.MixinBlock",
+    "world.MixinFluidBlock"
   ],
   "injectors": {
     "defaultRequire": 1

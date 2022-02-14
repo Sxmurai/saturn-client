@@ -13,7 +13,7 @@ public class SendMovementPacketsEvent extends Event {
         return false;
     }
 
-    public static class Pre extends Event {
+    public static class Pre extends SendMovementPacketsEvent {
         private double x, y, z;
         private float yaw, pitch;
         private boolean onGround;
