@@ -72,6 +72,7 @@ public class ModuleManager implements Wrapper {
         modules.add(new Scaffold());
         modules.add(new SpeedMine());
         modules.add(new Timer());
+        modules.add(new Yaw());
 
         // register all settings
         modules.forEach(Module::register);
