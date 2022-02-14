@@ -6,6 +6,8 @@
 package cope.saturn.util.world;
 
 import cope.saturn.util.internal.Wrapper;
+import net.minecraft.block.Block;
+import net.minecraft.block.Blocks;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Box;
@@ -13,8 +15,33 @@ import net.minecraft.util.math.Direction;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 public class BlockUtil implements Wrapper {
+    /**
+     * Represents blocks that need to have a sneak packet sent along with it
+     *
+     * I actually died to an iron golem while scaffolding upwards because this wasn't implemented, so I just remembered to do this.
+     */
+    public static final Set<Block> SNEAK_BLOCKS = Set.of(
+            Blocks.CRAFTING_TABLE,
+            Blocks.FURNACE,
+            Blocks.BLAST_FURNACE,
+            Blocks.FLETCHING_TABLE,
+            Blocks.CARTOGRAPHY_TABLE,
+            Blocks.ENCHANTING_TABLE,
+            Blocks.SMITHING_TABLE,
+            Blocks.CHEST,
+            Blocks.ENDER_CHEST,
+            Blocks.TRAPPED_CHEST,
+            Blocks.ANVIL,
+            Blocks.CHIPPED_ANVIL,
+            Blocks.DAMAGED_ANVIL,
+            Blocks.JUKEBOX,
+            Blocks.NOTE_BLOCK,
+            Blocks.STONECUTTER
+    );
+
     /**
      * Gets a sphere of blocks around a point of origin
      * @param origin The origin point

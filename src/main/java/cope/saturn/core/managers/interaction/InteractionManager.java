@@ -10,6 +10,7 @@ import cope.saturn.util.entity.player.rotation.RotationUtil;
 import cope.saturn.util.internal.Wrapper;
 import cope.saturn.util.network.NetworkUtil;
 import cope.saturn.util.world.BlockUtil;
+import net.minecraft.network.packet.c2s.play.ClientCommandC2SPacket;
 import net.minecraft.network.packet.c2s.play.PlayerInteractBlockC2SPacket;
 import net.minecraft.util.Hand;
 import net.minecraft.util.hit.BlockHitResult;
@@ -35,6 +36,12 @@ public class InteractionManager implements Wrapper {
         }
 
         BlockPos neighbor = pos.offset(direction);
+
+        boolean sneak = BlockUtil.SNEAK_BLOCKS.contains(mc.world.getBlockState(neighbor).getBlock());
+        if (sneak) {
+            NetworkUtil.sendPacket(new ClientCommandC2SPacket(mc.player, ClientCommandC2SPacket.Mode.PRESS_SHIFT_KEY));
+        }
+
         Vec3d vec = new Vec3d(neighbor.getX(), neighbor.getY(), neighbor.getZ());
 
         if (rotate) {
@@ -57,6 +64,10 @@ public class InteractionManager implements Wrapper {
         }
 
         mc.player.swingHand(hand);
+
+        if (sneak) {
+            NetworkUtil.sendPacket(new ClientCommandC2SPacket(mc.player, ClientCommandC2SPacket.Mode.RELEASE_SHIFT_KEY));
+        }
     }
 
     /**
