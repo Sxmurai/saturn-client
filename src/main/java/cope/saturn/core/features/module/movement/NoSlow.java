@@ -12,6 +12,7 @@ import cope.saturn.core.features.module.Category;
 import cope.saturn.core.features.module.Module;
 import cope.saturn.core.managers.InventoryManager;
 import cope.saturn.core.settings.Setting;
+import cope.saturn.util.network.NetworkUtil;
 import me.bush.eventbus.annotation.EventListener;
 import net.minecraft.client.gui.screen.ChatScreen;
 import net.minecraft.client.option.KeyBinding;
@@ -20,6 +21,7 @@ import net.minecraft.item.BowItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.PotionItem;
 import net.minecraft.network.packet.c2s.play.ClientCommandC2SPacket;
+import net.minecraft.network.packet.c2s.play.UpdateSelectedSlotC2SPacket;
 import net.minecraft.util.math.MathHelper;
 import org.lwjgl.glfw.GLFW;
 
@@ -40,7 +42,7 @@ public class NoSlow extends Module {
     @EventListener
     public void onClientTick(ClientTickEvent event) {
         if (validateNoSlow() && strict.getValue()) {
-            getSaturn().getInventoryManager().swap(mc.player.getInventory().selectedSlot, InventoryManager.Swap.PACKET);
+            NetworkUtil.sendPacket(new UpdateSelectedSlotC2SPacket(mc.player.getInventory().selectedSlot));
         }
 
         if (inventoryMove.getValue() && mc.currentScreen != null && !(mc.currentScreen instanceof ChatScreen)) {
