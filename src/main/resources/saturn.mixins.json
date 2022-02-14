@@ -31,7 +31,10 @@
     "render.MixinCamera",
     "render.MixinGameRenderer",
     "render.MixinParticleManager",
-    "render.MixinPlayerEntityRenderer"
+    "render.MixinPlayerEntityRenderer",
+
+    "world.MixinAbstractBlockState",
+    "world.MixinBlock"
   ],
   "injectors": {
     "defaultRequire": 1
