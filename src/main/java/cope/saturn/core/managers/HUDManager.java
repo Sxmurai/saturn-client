@@ -11,6 +11,7 @@ import cope.saturn.core.features.hud.HUDElement;
 import cope.saturn.core.features.hud.client.Watermark;
 import cope.saturn.core.features.hud.player.Armor;
 import cope.saturn.core.features.hud.player.PlayerModel;
+import cope.saturn.core.features.hud.world.Speed;
 import cope.saturn.core.features.module.client.HUD;
 import cope.saturn.util.internal.Wrapper;
 import me.bush.eventbus.annotation.EventListener;
@@ -30,6 +31,9 @@ public class HUDManager implements Wrapper {
         // player
         elements.add(new Armor());
         elements.add(new PlayerModel());
+
+        // world
+        elements.add(new Speed());
 
         Saturn.LOGGER.info("Loaded {} hud elements", elements.size());
     }

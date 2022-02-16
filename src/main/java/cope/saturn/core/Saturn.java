@@ -30,6 +30,7 @@ public class Saturn implements ClientModInitializer {
     private InventoryManager inventoryManager;
     private RotationManager rotationManager;
     private InteractionManager interactionManager;
+    private ServerManager serverManager;
     private TotemPopManager totemPopManager;
 
     @Override
@@ -43,6 +44,7 @@ public class Saturn implements ClientModInitializer {
         inventoryManager = new InventoryManager();
         rotationManager = new RotationManager();
         interactionManager = new InteractionManager();
+        serverManager = new ServerManager();
         totemPopManager = new TotemPopManager();
     }
 
@@ -68,6 +70,10 @@ public class Saturn implements ClientModInitializer {
 
     public InteractionManager getInteractionManager() {
         return interactionManager;
+    }
+
+    public ServerManager getServerManager() {
+        return serverManager;
     }
 
     public TotemPopManager getTotemPopManager() {
