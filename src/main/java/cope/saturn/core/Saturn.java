@@ -7,6 +7,7 @@ package cope.saturn.core;
 
 import cope.saturn.core.managers.*;
 import cope.saturn.core.managers.interaction.InteractionManager;
+import cope.saturn.core.updater.VersionChecker;
 import me.bush.eventbus.bus.EventBus;
 import me.bush.eventbus.handler.handlers.ReflectHandler;
 import net.fabricmc.api.ClientModInitializer;
@@ -17,7 +18,7 @@ public class Saturn implements ClientModInitializer {
     public static Saturn INSTANCE;
 
     public static final String NAME = "Saturn";
-    public static final String VERSION = "1.0";
+    public static final String VERSION = "0.9";
 
     public static final Logger LOGGER = LoggerFactory.getLogger(NAME);
 
@@ -46,6 +47,9 @@ public class Saturn implements ClientModInitializer {
         interactionManager = new InteractionManager();
         serverManager = new ServerManager();
         totemPopManager = new TotemPopManager();
+
+        // handle updates
+        VersionChecker.handleUpdates();
     }
 
     public ModuleManager getModuleManager() {
