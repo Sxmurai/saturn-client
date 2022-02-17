@@ -1,6 +1,0 @@
-accessWidener	v1	named
-
-# Interaction Packet. How the fuck Mojang???? why mojang?????
-Accessible   class   net/minecraft/network/packet/c2s/play/PlayerInteractEntityC2SPacket$InteractType
-Accessible   class   net/minecraft/network/packet/c2s/play/PlayerInteractEntityC2SPacket$InteractAtHandler
-Accessible   class   net/minecraft/network/packet/c2s/play/PlayerInteractEntityC2SPacket$InteractTypeHandler
