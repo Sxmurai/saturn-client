@@ -141,14 +141,14 @@ public class VersionChecker {
      */
     private static Path getMinecraftModsFolder() {
         String os = System.getProperty("os.name").toLowerCase();
-        Path home = Paths.get(System.getProperty("user.home"));
+        String home = System.getProperty("user.home");
 
         if (os.contains("win")) {
-            return Paths.get(home.toString(), "\\AppData\\Roaming\\.minecraft\\mods\\");
+            return Paths.get(home, "\\AppData\\Roaming\\.minecraft\\mods\\");
         } else if (os.contains("mac")) {
-            return home.resolve("/Library/Application Support/minecraft/mods/");
+            return Paths.get(home, "/Library/Application Support/minecraft/mods/");
         } else if (os.contains("nix") || os.contains("linux")) {
-            return home.resolve("/.minecraft/mods/");
+            return Paths.get(home, "/.minecraft/mods/");
         } else {
             return null;
         }
