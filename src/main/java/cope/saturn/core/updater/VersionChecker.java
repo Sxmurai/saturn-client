@@ -6,9 +6,7 @@
 package cope.saturn.core.updater;
 
 import cope.saturn.core.Saturn;
-import cope.saturn.util.internal.Wrapper;
 import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.util.NarratorManager;
 import org.apache.commons.io.FileUtils;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
@@ -18,10 +16,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.swing.*;
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -51,6 +47,8 @@ public class VersionChecker {
             LOGGER.error("Minecraft mods folder not found?");
             return;
         }
+
+        Saturn.LOGGER.info("Found mods folder for updater: {}", modsFolder);
 
         // this needs to be set to false otherwise upon initializing JFrame it will crash
         System.setProperty("java.awt.headless", "false");
@@ -88,30 +86,9 @@ public class VersionChecker {
                     FileUtils.copyURLToFile(
                             new URL("https://github.com/Sxmurai/saturn-client/blob/releases/saturn-" + latest + ".jar?raw=true"),
                             modsFolder.resolve("saturn-" + latest + ".jar").toFile());
-
-                    // stop minecraft instance
-                    // we cannot replace the jar while the client is running, so we'll need to do this
-                    // we also cannot call .stop() because it calls System.exit before we'll be able to do anything
-
-                    try {
-                        NarratorManager.INSTANCE.destroy();
-
-                        if (Wrapper.mc.world != null) {
-                            Wrapper.mc.world.disconnect();
-                        }
-
-                        if (Wrapper.mc.currentScreen != null) {
-                            Wrapper.mc.currentScreen.removed();
-                        }
-
-                        Wrapper.mc.close();
-                    } catch (Throwable e) {
-                        e.printStackTrace();
-                    }
-
-                    Files.delete(modsFolder.resolve("saturn-" + Saturn.VERSION + ".jar"));
                 } catch (IOException e) {
                     Saturn.LOGGER.error("Could not download JAR into mods folder or could not delete current mod, stacktrace follows:\n{}", e.toString());
+                    return;
                 }
 
                 JOptionPane.showMessageDialog(
@@ -119,6 +96,17 @@ public class VersionChecker {
                         "Downloaded and replaced mod jar! Please restart your minecraft instance!",
                         "Saturn Updater",
                         JOptionPane.INFORMATION_MESSAGE);
+
+                MinecraftClient.getInstance().scheduleStop();
+
+                // once the stop method calls System.exit, this will be called, and we can delete the file
+                Runtime.getRuntime().addShutdownHook(new Thread(() -> {
+                    try {
+                        Files.delete(modsFolder.resolve("saturn-" + Saturn.VERSION + ".jar"));
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }));
             }).start();
         }
     }
@@ -156,11 +144,11 @@ public class VersionChecker {
         Path home = Paths.get(System.getProperty("user.home"));
 
         if (os.contains("win")) {
-            return home.resolve("/AppData/Roaming/.minecraft/mods/");
+            return Paths.get(home.toString(), "\\AppData\\Roaming\\.minecraft\\mods\\");
         } else if (os.contains("mac")) {
             return home.resolve("/Library/Application Support/minecraft/mods/");
         } else if (os.contains("nix") || os.contains("linux")) {
-            return home.resolve(".minecraft/mods/");
+            return home.resolve("/.minecraft/mods/");
         } else {
             return null;
         }
