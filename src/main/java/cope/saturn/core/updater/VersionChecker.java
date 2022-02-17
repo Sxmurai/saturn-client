@@ -56,7 +56,7 @@ public class VersionChecker {
         System.setProperty("java.awt.headless", "false");
 
         LOGGER.info("Fetching latest version...");
-        String latest = fetchVersion();
+        String latest = fetchVersion().replace("\n", "");
 
         if (Saturn.VERSION.equalsIgnoreCase(latest)) {
             LOGGER.info("On latest version {}!", Saturn.VERSION);
@@ -76,7 +76,7 @@ public class VersionChecker {
 
         int response = JOptionPane.showConfirmDialog(
                 null,
-                "Version outdated! Client version is on v" + Saturn.VERSION + ", and we're on v" + latest + "\nWould you like to update?",
+                "Version outdated! Client version is on v" + Saturn.VERSION + ", and we're on v" + latest + "!\nWould you like to update?",
                 "Saturn Updater",
                 JOptionPane.YES_NO_OPTION);
 
