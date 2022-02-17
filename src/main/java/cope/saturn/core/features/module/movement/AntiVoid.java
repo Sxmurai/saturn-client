@@ -5,7 +5,7 @@
 
 package cope.saturn.core.features.module.movement;
 
-import cope.saturn.core.events.PacketEvent;
+import cope.saturn.core.events.ClientTickEvent;
 import cope.saturn.core.features.module.Category;
 import cope.saturn.core.features.module.Module;
 import cope.saturn.core.settings.Setting;
@@ -21,7 +21,7 @@ public class AntiVoid extends Module {
     public static final Setting<Mode> mode = new Setting<>("Mode", Mode.SUSPEND);
 
     @EventListener
-    public void onPacketSend(PacketEvent.Send event) {
+    public void onClientTick(ClientTickEvent event) {
         if (mc.player.getY() <= mc.world.getBottomY()) {
             switch (mode.getValue()) {
                 case SUSPEND -> mc.player.setPosition(mc.player.getX(), mc.world.getBottomY(), mc.player.getZ());
