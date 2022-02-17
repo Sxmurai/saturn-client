@@ -30,6 +30,7 @@ public class ElytraFlight extends Module {
     public static final Setting<Boolean> suspend = new Setting<>(vertical, "Suspend", true);
     public static final Setting<Boolean> rotate = new Setting<>(vertical, "Rotate", true);
 
+    public static final Setting<Boolean> down = new Setting<>("Down", false);
     public static final Setting<Boolean> takeOff = new Setting<>("TakeOff", true);
 
     private int progress = 0;
@@ -96,6 +97,11 @@ public class ElytraFlight extends Module {
             --progress;
             if (progress >= 0) {
                 progress = 0;
+            }
+
+            // this helps on ec.me
+            if (down.getValue()) {
+                new Rotation(RotationType.PACKET, mc.player.getYaw(), 90.0f).send(false);
             }
 
             if (suspend.getValue()) {
