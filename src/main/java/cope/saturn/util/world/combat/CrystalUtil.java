@@ -6,6 +6,7 @@
 package cope.saturn.util.world.combat;
 
 import cope.saturn.util.internal.Wrapper;
+import cope.saturn.util.world.BlockUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
 import net.minecraft.entity.Entity;
@@ -33,22 +34,13 @@ public class CrystalUtil implements Wrapper {
             return false;
         }
 
-        for (Entity entity : mc.world.getNonSpectatingEntities(Entity.class, new Box(boost))) {
-            if (!entity.isAlive() || entity instanceof EndCrystalEntity) {
-                continue;
-            }
-
+        if (!mc.world.getOtherEntities(null, new Box(boost), (e) -> e != null || !e.isAlive()).isEmpty()) {
             return false;
         }
 
-        if (placement.equals(Placement.OLD)) {
-            for (Entity entity : mc.world.getNonSpectatingEntities(Entity.class, new Box(nextBoost))) {
-                if (!entity.isAlive() || entity instanceof EndCrystalEntity) {
-                    continue;
-                }
-
-                return false;
-            }
+        if (placement.equals(Placement.OLD) &&
+                mc.world.getOtherEntities(null, new Box(nextBoost), (e) -> e != null || !e.isAlive()).isEmpty()) {
+            return false;
         }
 
         return true;
