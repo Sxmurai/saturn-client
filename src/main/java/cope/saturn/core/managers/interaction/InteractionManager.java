@@ -5,6 +5,7 @@
 
 package cope.saturn.core.managers.interaction;
 
+import cope.saturn.core.features.module.world.AirPlace;
 import cope.saturn.util.entity.player.rotation.RotationType;
 import cope.saturn.util.entity.player.rotation.RotationUtil;
 import cope.saturn.util.internal.Wrapper;
@@ -30,12 +31,19 @@ public class InteractionManager implements Wrapper {
      * @param rotate If to rotate
      */
     public void place(BlockPos pos, PlaceType type, Hand hand, boolean rotate) {
+        BlockPos neighbor;
+
         Direction direction = BlockUtil.getDirection(pos);
         if (direction == null) {
-            return;
+            if (AirPlace.INSTANCE.isToggled()) {
+                direction = Direction.UP;
+                neighbor = pos;
+            } else {
+                return;
+            }
+        } else {
+            neighbor = pos.offset(direction);
         }
-
-        BlockPos neighbor = pos.offset(direction);
 
         boolean sneak = BlockUtil.SNEAK_BLOCKS.contains(mc.world.getBlockState(neighbor).getBlock());
         if (sneak) {
