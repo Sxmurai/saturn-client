@@ -9,6 +9,7 @@
     "client.MixinMinecraftClient",
 
     "entity.MixinClientPlayerEntity",
+    "entity.MixinEntity",
 
     "input.MixinClientPlayerInteractionManager",
     "input.MixinKeyboard",
