@@ -30,6 +30,7 @@ import net.minecraft.network.packet.s2c.play.PlaySoundS2CPacket;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.Vec3d;
 
 import java.util.List;
@@ -47,6 +48,9 @@ public class AutoCrystal extends Module {
     public static final Setting<Boolean> raycast = new Setting<>(place, "Raycast", false);
     public static final Setting<Boolean> strictDirection = new Setting<>(place, "StrictDirection", false);
     public static final Setting<CrystalUtil.Placement> type = new Setting<>(place, "Type", CrystalUtil.Placement.UPDATED);
+    public static final Setting<Boolean> faceplace = new Setting<>(place, "Faceplace", true);
+    public static final Setting<Float> faceplaceHealth = new Setting<>(faceplace, "FaceplaceHealth", 14.0f, 1.0f, 20.0f);
+    public static final Setting<Float> faceplaceDamage = new Setting<>(faceplace, "FaceplaceDamage", 2.0f, 1.0f, 4.0f);
 
     public static final Setting<Boolean> explode = new Setting<>("Explode", true);
     public static final Setting<Float> explodeSpeed = new Setting<>(explode, "ExplodeSpeed", 20.0f, 0.1, 20.0f);
@@ -278,6 +282,38 @@ public class AutoCrystal extends Module {
             if (targetDamage > damage) {
                 damage = targetDamage;
                 placementPos = pos;
+            }
+        }
+
+        if (placementPos == null && faceplace.getValue() &&
+                target != null && EntityUtil.getHealth(target) <= faceplaceHealth.getValue()) {
+
+            for (Direction direction : Direction.values()) {
+                if (direction.equals(Direction.UP) || direction.equals(Direction.DOWN)) {
+                    continue;
+                }
+
+                BlockPos pos = target.getBlockPos().offset(direction);
+                if (!CrystalUtil.canPlace(pos, type.getValue())) {
+                    continue;
+                }
+
+                Vec3d explosionOffset = new Vec3d(pos.getX() + 0.5, pos.getY() + 1.0, pos.getZ() + 0.5);
+
+                float localDamage = DamagesUtil.crystalDamage(explosionOffset, mc.player) + localBias.getValue();
+                if (localDamage > EntityUtil.getHealth(mc.player) || localDamage > maxLocal.getValue()) {
+                    continue;
+                }
+
+                float targetDamage = DamagesUtil.crystalDamage(explosionOffset, target);
+                if (localDamage > targetDamage || targetDamage < faceplaceDamage.getValue()) {
+                    continue;
+                }
+
+                if (targetDamage > damage) {
+                    damage = targetDamage;
+                    placementPos = pos;
+                }
             }
         }
 
