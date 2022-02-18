@@ -13,6 +13,7 @@ import cope.saturn.core.features.module.client.HUD;
 import cope.saturn.core.features.module.client.HUDEditor;
 import cope.saturn.core.features.module.client.Notifier;
 import cope.saturn.core.features.module.combat.*;
+import cope.saturn.core.features.module.miscellaneous.MiddleClick;
 import cope.saturn.core.features.module.miscellaneous.PingSpoof;
 import cope.saturn.core.features.module.miscellaneous.Portal;
 import cope.saturn.core.features.module.movement.*;
@@ -47,6 +48,7 @@ public class ModuleManager implements Wrapper {
         modules.add(new FeetTrap());
 
         // Miscellaneous
+        modules.add(new MiddleClick());
         modules.add(new PingSpoof());
         modules.add(new Portal());
 

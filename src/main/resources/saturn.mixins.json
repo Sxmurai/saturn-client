@@ -11,8 +11,9 @@
     "entity.MixinClientPlayerEntity",
     "entity.MixinEntity",
 
+    "input.hardware.MixinKeyboard",
+    "input.hardware.MixinMouse",
     "input.MixinClientPlayerInteractionManager",
-    "input.MixinKeyboard",
 
     "math.MixinVec3d",
 
