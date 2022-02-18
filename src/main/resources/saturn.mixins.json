@@ -28,6 +28,8 @@
 
     "render.entity.MixinLivingEntityRenderer",
     "render.gui.IChatHud",
+    "render.gui.IScreen",
+    "render.gui.MixinDisconnectedScreen",
     "render.gui.MixinInGameHud",
     "render.gui.MixinInGameOverlayRenderer",
     "render.MixinCamera",
