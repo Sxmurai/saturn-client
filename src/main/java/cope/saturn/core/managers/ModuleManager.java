@@ -13,6 +13,7 @@ import cope.saturn.core.features.module.client.HUD;
 import cope.saturn.core.features.module.client.HUDEditor;
 import cope.saturn.core.features.module.client.Notifier;
 import cope.saturn.core.features.module.combat.*;
+import cope.saturn.core.features.module.miscellaneous.AutoRespawn;
 import cope.saturn.core.features.module.miscellaneous.MiddleClick;
 import cope.saturn.core.features.module.miscellaneous.PingSpoof;
 import cope.saturn.core.features.module.miscellaneous.Portal;
@@ -49,6 +50,7 @@ public class ModuleManager implements Wrapper {
         modules.add(new SelfFill());
 
         // Miscellaneous
+        modules.add(new AutoRespawn());
         modules.add(new MiddleClick());
         modules.add(new PingSpoof());
         modules.add(new Portal());
