@@ -60,4 +60,13 @@ public class TotemPopManager implements Wrapper {
             }
         }
     }
+
+    /**
+     * Gets the players totem pops
+     * @param player the player
+     * @return the amount of pops, or -1 if none
+     */
+    public int get(PlayerEntity player) {
+        return totemPops.getOrDefault(player, -1);
+    }
 }

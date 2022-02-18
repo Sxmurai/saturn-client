@@ -6,12 +6,14 @@
 package cope.saturn.asm.mixins.render;
 
 import cope.saturn.core.Saturn;
+import cope.saturn.core.features.module.visuals.Nametags;
 import cope.saturn.util.entity.player.rotation.Rotation;
 import cope.saturn.util.internal.Wrapper;
 import net.minecraft.client.network.AbstractClientPlayerEntity;
 import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.render.entity.PlayerEntityRenderer;
 import net.minecraft.client.util.math.MatrixStack;
+import net.minecraft.text.Text;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -61,6 +63,14 @@ public class MixinPlayerEntityRenderer {
 
             abstractClientPlayerEntity.setPitch(prevPitch);
             abstractClientPlayerEntity.prevPitch = prevPitch;
+        }
+    }
+
+    @Inject(method = "renderLabelIfPresent", at = @At("HEAD"), cancellable = true)
+    public void renderLabelIfPresent(AbstractClientPlayerEntity abstractClientPlayerEntity, Text text, MatrixStack matrixStack, VertexConsumerProvider vertexConsumerProvider, int i, CallbackInfo info) {
+        if (Nametags.INSTANCE.isToggled()) {
+            info.cancel();
+            Nametags.render(abstractClientPlayerEntity, matrixStack, vertexConsumerProvider, i);
         }
     }
 }

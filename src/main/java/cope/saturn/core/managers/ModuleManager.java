@@ -67,6 +67,7 @@ public class ModuleManager implements Wrapper {
         modules.add(new CameraClip());
         modules.add(new Chams());
         modules.add(new Fullbright());
+        modules.add(new Nametags());
         modules.add(new NoRender());
         modules.add(new Tracers());
         modules.add(new Wallhack());
