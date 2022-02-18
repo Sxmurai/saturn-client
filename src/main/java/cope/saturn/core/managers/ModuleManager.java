@@ -75,6 +75,7 @@ public class ModuleManager implements Wrapper {
         modules.add(new AntiHunger());
         modules.add(new AutoFish());
         modules.add(new AutoTool());
+        modules.add(new FastPlace());
         modules.add(new Scaffold());
         modules.add(new SpeedMine());
         modules.add(new Timer());

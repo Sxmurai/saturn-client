@@ -14,4 +14,7 @@ import org.spongepowered.asm.mixin.gen.Accessor;
 public interface IMinecraftClient {
     @Accessor("renderTickCounter")
     RenderTickCounter getRenderTickCounter();
+
+    @Accessor("itemUseCooldown")
+    void setItemUseCooldown(int itemUseCooldown);
 }
