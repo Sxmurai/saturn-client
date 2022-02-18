@@ -46,6 +46,7 @@ public class ModuleManager implements Wrapper {
         modules.add(new BowRelease());
         modules.add(new Criticals());
         modules.add(new FeetTrap());
+        modules.add(new SelfFill());
 
         // Miscellaneous
         modules.add(new MiddleClick());
