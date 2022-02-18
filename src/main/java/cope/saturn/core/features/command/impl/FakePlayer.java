@@ -11,12 +11,12 @@ import cope.saturn.core.Saturn;
 import cope.saturn.core.events.ClientTickEvent;
 import cope.saturn.core.events.PacketEvent;
 import cope.saturn.core.features.command.Command;
+import cope.saturn.util.entity.player.FakeplayerUtil;
 import cope.saturn.util.internal.ChatUtil;
 import cope.saturn.util.internal.Stopwatch;
 import cope.saturn.util.world.combat.DamagesUtil;
 import me.bush.eventbus.annotation.EventListener;
 import net.minecraft.client.network.OtherClientPlayerEntity;
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.item.ItemStack;
@@ -36,26 +36,13 @@ public class FakePlayer extends Command {
         super("fakeplayer", "Spawns a fakeplayer in the world", LiteralArgumentBuilder.literal("fakeplayer")
                 .executes((c) -> {
                     if (fakePlayer != null) {
-                        mc.world.removeEntity(fakePlayer.getId(), Entity.RemovalReason.KILLED);
+                        FakeplayerUtil.despawn(-133769420);
                         fakePlayer = null;
 
                         ChatUtil.send("Despawned fake player.");
                     } else {
-                        fakePlayer = new OtherClientPlayerEntity(mc.world, new GameProfile(UUID.randomUUID(), "FakePlayer")) {
-                            @Override
-                            public boolean isDead() {
-                                return false;
-                            }
-                        };
-
-                        fakePlayer.copyPositionAndRotation(mc.player);
-                        fakePlayer.getInventory().clone(mc.player.getInventory());
-                        fakePlayer.setId(-133769420);
-
+                        fakePlayer = FakeplayerUtil.spawn(-133769420, new GameProfile(UUID.randomUUID(), "FakePlayer"));
                         fakePlayer.setStackInHand(Hand.OFF_HAND, new ItemStack(Items.TOTEM_OF_UNDYING));
-
-                        mc.world.spawnEntity(fakePlayer);
-                        mc.world.addEntity(fakePlayer.getId(), fakePlayer);
 
                         ChatUtil.send("Spawned fake player.");
                     }
