@@ -8,6 +8,7 @@ package cope.saturn.core.managers;
 import cope.saturn.core.Saturn;
 import cope.saturn.core.events.RenderHUDEvent;
 import cope.saturn.core.features.hud.HUDElement;
+import cope.saturn.core.features.hud.client.Ping;
 import cope.saturn.core.features.hud.client.Watermark;
 import cope.saturn.core.features.hud.player.Armor;
 import cope.saturn.core.features.hud.player.PlayerModel;
@@ -26,6 +27,7 @@ public class HUDManager implements Wrapper {
         Saturn.EVENT_BUS.subscribe(this);
 
         // client
+        elements.add(new Ping());
         elements.add(new Watermark());
 
         // player
