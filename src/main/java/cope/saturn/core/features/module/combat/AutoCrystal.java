@@ -113,7 +113,7 @@ public class AutoCrystal extends Module {
                     packet.getEntity() instanceof EndCrystalEntity crystalEntity) {
 
                 if (attackCrystal != null && attackCrystal.equals(crystalEntity)) {
-                    crystalEntity.kill();
+                    // crystalEntity.kill();
                     attackCrystal = null;
                 }
             }
@@ -134,7 +134,7 @@ public class AutoCrystal extends Module {
                     }
 
                     if (entity.squaredDistanceTo(packet.getX(), packet.getY(), packet.getZ()) < 12.0) {
-                        entity.kill();
+                        // entity.kill();
                         if (attackCrystal != null && attackCrystal.equals(crystal)) {
                             attackCrystal = null;
                         }
@@ -148,7 +148,7 @@ public class AutoCrystal extends Module {
                 }
 
                 if (entity.squaredDistanceTo(packet.getX(), packet.getY(), packet.getZ()) < packet.getRadius() * packet.getRadius()) {
-                    entity.kill();
+                    // entity.kill();
                     if (attackCrystal != null && attackCrystal.equals(crystal)) {
                         attackCrystal = null;
                     }
