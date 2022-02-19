@@ -9,9 +9,11 @@ import cope.saturn.core.events.MouseEvent;
 import cope.saturn.core.features.module.Category;
 import cope.saturn.core.features.module.Module;
 import cope.saturn.core.managers.InventoryManager;
+import cope.saturn.core.managers.friend.FriendManager;
 import cope.saturn.core.settings.Setting;
 import cope.saturn.util.entity.player.inventory.InventoryUtil;
 import cope.saturn.util.input.InputUtil;
+import cope.saturn.util.internal.ChatUtil;
 import me.bush.eventbus.annotation.EventListener;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Items;
@@ -75,7 +77,15 @@ public class MiddleClick extends Module {
                 return;
             }
 
-            // TODO: relationship manager
+            FriendManager friendManager = getSaturn().getFriendManager();
+
+            if (friendManager.isFriend(player.getUuid())) {
+                friendManager.remove(player.getUuid());
+                ChatUtil.send("Removed " + player.getName().asString() + " from your friend list.");
+            } else {
+                friendManager.add(player.getUuid(), player.getName().asString());
+                ChatUtil.send("Added " + player.getName().asString() + " as a friend.");
+            }
         }
     }
 

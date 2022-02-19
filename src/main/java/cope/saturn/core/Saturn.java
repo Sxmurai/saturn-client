@@ -6,6 +6,7 @@
 package cope.saturn.core;
 
 import cope.saturn.core.managers.*;
+import cope.saturn.core.managers.friend.FriendManager;
 import cope.saturn.core.managers.interaction.InteractionManager;
 import cope.saturn.core.updater.VersionChecker;
 import cope.saturn.util.internal.FileUtil;
@@ -28,6 +29,7 @@ public class Saturn implements ClientModInitializer {
     private ModuleManager moduleManager;
     private CommandManager commandManager;
     private HUDManager hudManager;
+    private FriendManager friendManager;
 
     private InventoryManager inventoryManager;
     private RotationManager rotationManager;
@@ -50,6 +52,7 @@ public class Saturn implements ClientModInitializer {
         moduleManager = new ModuleManager();
         commandManager = new CommandManager();
         hudManager = new HUDManager();
+        friendManager = new FriendManager();
 
         inventoryManager = new InventoryManager();
         rotationManager = new RotationManager();
@@ -76,6 +79,10 @@ public class Saturn implements ClientModInitializer {
 
     public HUDManager getHudManager() {
         return hudManager;
+    }
+
+    public FriendManager getFriendManager() {
+        return friendManager;
     }
 
     public InventoryManager getInventoryManager() {

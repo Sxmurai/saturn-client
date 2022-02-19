@@ -7,6 +7,7 @@ package cope.saturn.core.managers;
 
 import cope.saturn.core.Saturn;
 import cope.saturn.core.config.Config;
+import cope.saturn.core.config.impl.Friends;
 import cope.saturn.core.config.impl.Modules;
 import cope.saturn.util.internal.Wrapper;
 
@@ -21,6 +22,7 @@ public class ConfigManager implements Wrapper {
     private final ArrayList<Config> configs = new ArrayList<>();
 
     public ConfigManager() {
+        configs.add(new Friends(getSaturn().getFriendManager()));
         configs.add(new Modules(getSaturn().getModuleManager()));
 
         configs.forEach(Config::load);

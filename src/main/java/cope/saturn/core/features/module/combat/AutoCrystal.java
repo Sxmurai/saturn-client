@@ -356,7 +356,7 @@ public class AutoCrystal extends Module {
         PlayerEntity possibleTarget = target;
 
         for (PlayerEntity player : mc.world.getPlayers()) {
-            if (player == null || player.equals(mc.player)) {
+            if (player == null || player.equals(mc.player) || getSaturn().getFriendManager().isFriend(player.getUuid())) {
                 continue;
             }
 

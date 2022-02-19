@@ -151,6 +151,10 @@ public class Aura extends Module {
                 continue;
             }
 
+            if (getSaturn().getFriendManager().isFriend(entity.getUuid())) {
+                continue;
+            }
+
             boolean canSee = mc.player.canSee(entity);
             if (!walls.getValue() && !canSee) {
                 continue;

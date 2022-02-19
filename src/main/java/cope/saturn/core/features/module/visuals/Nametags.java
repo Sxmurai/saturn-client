@@ -54,7 +54,18 @@ public class Nametags extends Module {
 
         Matrix4f matrix4f = stack.peek().getPositionMatrix();
 
-        String text = player.getName().asString();
+        String text = "";
+
+        if (player.isSneaking()) {
+            text += "\u00A76";
+        } else {
+            if (INSTANCE.getSaturn().getFriendManager().isFriend(player.getUuid())) {
+                text += "\u00A7b";
+            }
+        }
+
+        text += player.getName().asString();
+
         if (health.getValue()) {
             float totalHealth = EntityUtil.getHealth(player);
 
