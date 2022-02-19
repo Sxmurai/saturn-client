@@ -22,7 +22,14 @@ public class InventoryManager implements Wrapper {
     @EventListener
     public void onPacketSend(PacketEvent.Send event) {
         if (event.getPacket() instanceof UpdateSelectedSlotC2SPacket packet) {
-            serverSlot = packet.getSelectedSlot();
+            int slot = packet.getSelectedSlot();
+
+            if (slot < 0 || slot > 9) {
+                event.setCancelled(true);
+                return;
+            }
+
+            serverSlot = slot;
         }
     }
 

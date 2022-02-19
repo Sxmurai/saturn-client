@@ -13,12 +13,10 @@ import cope.saturn.util.entity.player.inventory.task.Task;
 import cope.saturn.util.entity.player.inventory.task.TaskHandler;
 import me.bush.eventbus.annotation.EventListener;
 import net.minecraft.enchantment.EnchantmentHelper;
-import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.item.ArmorItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.screen.slot.SlotActionType;
-import net.minecraft.util.math.MathHelper;
 
 // This AutoArmor is from cosmos, But guess who wrote that AutoArmor? me. so fuck you, its my code
 public class AutoArmor extends Module {
