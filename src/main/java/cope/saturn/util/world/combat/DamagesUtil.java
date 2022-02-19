@@ -31,6 +31,16 @@ public class DamagesUtil implements Wrapper {
     }
 
     /**
+     * Calculates crystal damage
+     * @param vec The position of the damage
+     * @param target The target of the damage
+     * @return the damage the target took from the bed explosion
+     */
+    public static float bedDamage(Vec3d vec, LivingEntity target) {
+        return explosionDamage(vec, target, 5.0, true, true);
+    }
+
+    /**
      * Calculates the damage taken from an explosion
      * @param vec The position of the damage
      * @param target The target of the damage

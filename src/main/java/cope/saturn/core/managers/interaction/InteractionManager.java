@@ -13,6 +13,7 @@ import cope.saturn.util.network.NetworkUtil;
 import cope.saturn.util.world.BlockUtil;
 import net.minecraft.network.packet.c2s.play.ClientCommandC2SPacket;
 import net.minecraft.network.packet.c2s.play.PlayerInteractBlockC2SPacket;
+import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
@@ -92,7 +93,7 @@ public class InteractionManager implements Wrapper {
         if (strict && pos.getY() > mc.player.getY() + mc.player.getStandingEyeHeight()) {
             BlockHitResult result = mc.world.raycast(new RaycastContext(
                     mc.player.getEyePos(),
-                    new Vec3d(pos.getX() + 0.5, pos.getY() + (raytrace ? 0.5 : 0.0), pos.getZ()),
+                    new Vec3d(pos.getX() + 0.5, pos.getY() + (raytrace ? 0.5 : 0.0), pos.getZ() + 0.5),
                     RaycastContext.ShapeType.COLLIDER,
                     RaycastContext.FluidHandling.NONE,
                     mc.player
@@ -111,6 +112,41 @@ public class InteractionManager implements Wrapper {
 
         if (swing) {
             mc.player.swingHand(hand);
+        }
+    }
+
+    /**
+     * Right clicks a block
+     * @param pos The pos
+     * @param swing if to swing
+     * @param rotate if to rotate
+     */
+    public void rightClick(BlockPos pos, boolean swing, boolean rotate) {
+        Direction direction = Direction.UP;
+
+        if (pos.getY() > mc.player.getY() + mc.player.getStandingEyeHeight()) {
+            BlockHitResult result = mc.world.raycast(new RaycastContext(
+                    mc.player.getEyePos(),
+                    new Vec3d(pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5),
+                    RaycastContext.ShapeType.COLLIDER,
+                    RaycastContext.FluidHandling.NONE,
+                    mc.player
+            ));
+
+            direction = (result == null || result.getSide() == null) ? Direction.DOWN : result.getSide();
+        }
+
+        Vec3d posVec = new Vec3d(pos.getX(), pos.getY(), pos.getZ());
+
+        if (rotate) {
+            RotationUtil.rotation(posVec).type(RotationType.PACKET).send(true);
+        }
+
+        ActionResult result = mc.interactionManager.interactBlock(mc.player, mc.world, Hand.MAIN_HAND,
+                new BlockHitResult(posVec, direction, pos, false));
+
+        if (result.isAccepted() && result.shouldSwingHand() && swing) {
+            mc.player.swingHand(Hand.MAIN_HAND);
         }
     }
 }

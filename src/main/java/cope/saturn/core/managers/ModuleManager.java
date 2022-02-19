@@ -39,6 +39,7 @@ public class ModuleManager implements Wrapper {
         // Combat
         modules.add(new AimBot());
         modules.add(new Aura());
+        // modules.add(new AutoBed()) TODO: something is severely wrong with this module, idk what;
         modules.add(new AutoCrystal());
         modules.add(new AutoTotem());
         modules.add(new BowRelease());
@@ -77,6 +78,7 @@ public class ModuleManager implements Wrapper {
         // World
         modules.add(new AirPlace());
         modules.add(new AntiHunger());
+        // modules.add(new AutoBedCrafter()) TODO: this is also severely broken;
         modules.add(new AutoFish());
         modules.add(new AutoTool());
         modules.add(new FastPlace());
