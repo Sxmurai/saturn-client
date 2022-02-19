@@ -17,10 +17,6 @@ public class Notifier extends Module {
 
     public Notifier() {
         super("Notifier", Category.CLIENT, "Notifies you of shit");
-
-        // enabled by default
-        enable();
-
         INSTANCE = this;
     }
 
