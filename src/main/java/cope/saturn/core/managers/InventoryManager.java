@@ -6,11 +6,26 @@
 package cope.saturn.core.managers;
 
 import cope.saturn.core.Saturn;
+import cope.saturn.core.events.PacketEvent;
 import cope.saturn.util.internal.Wrapper;
 import cope.saturn.util.network.NetworkUtil;
+import me.bush.eventbus.annotation.EventListener;
 import net.minecraft.network.packet.c2s.play.UpdateSelectedSlotC2SPacket;
 
 public class InventoryManager implements Wrapper {
+    private int serverSlot = 0;
+
+    public InventoryManager() {
+        Saturn.EVENT_BUS.subscribe(this);
+    }
+
+    @EventListener
+    public void onPacketSend(PacketEvent.Send event) {
+        if (event.getPacket() instanceof UpdateSelectedSlotC2SPacket packet) {
+            serverSlot = packet.getSelectedSlot();
+        }
+    }
+
     /**
      * Swaps to a hotbar slot
      * @param slot The slot to swap to in the hotbar
@@ -33,6 +48,14 @@ public class InventoryManager implements Wrapper {
         NetworkUtil.sendPacket(new UpdateSelectedSlotC2SPacket(slot));
 
         mc.interactionManager.tick();
+    }
+
+    public boolean isSynced() {
+        return mc.player.getInventory().selectedSlot == serverSlot;
+    }
+
+    public int getServerSlot() {
+        return serverSlot;
     }
 
     public enum Swap {

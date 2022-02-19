@@ -17,13 +17,16 @@ import cope.saturn.util.entity.player.inventory.InventoryUtil;
 import cope.saturn.util.entity.player.rotation.RotationType;
 import cope.saturn.util.entity.player.rotation.RotationUtil;
 import cope.saturn.util.internal.Stopwatch;
+import cope.saturn.util.network.NetworkUtil;
 import cope.saturn.util.world.BlockUtil;
 import cope.saturn.util.world.combat.CrystalUtil;
 import cope.saturn.util.world.combat.DamagesUtil;
 import me.bush.eventbus.annotation.EventListener;
 import net.minecraft.entity.decoration.EndCrystalEntity;
+import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Items;
+import net.minecraft.item.SwordItem;
 import net.minecraft.network.packet.c2s.play.PlayerInteractEntityC2SPacket;
 import net.minecraft.network.packet.s2c.play.ExplosionS2CPacket;
 import net.minecraft.network.packet.s2c.play.PlaySoundS2CPacket;
@@ -57,6 +60,7 @@ public class AutoCrystal extends Module {
     public static final Setting<Integer> existed = new Setting<>(explode, "Existed", 0, 0, 10);
     public static final Setting<Double> explodeRange = new Setting<>(explode, "ExplodeRange", 4.5, 1.0, 6.0);
     public static final Setting<Double> explodeWalls = new Setting<>(explode, "ExplodeWalls", 3.0, 1.0, 6.0);
+    public static final Setting<Weakness> weakness = new Setting<>(explode, "Weakness", Weakness.PACKET);
 
     public static final Setting<Object> damage = new Setting<>("Damage", null);
     public static final Setting<Float> minDamage = new Setting<>(damage, "MinDamage", 4.0f, 1.0f, 20.0f);
@@ -188,6 +192,9 @@ public class AutoCrystal extends Module {
                     getSaturn().getInteractionManager().placeCrystal(
                             placePosition, hand, true, raycast.getValue(), strictDirection.getValue());
 
+                    // reset place position
+                    placePosition = null;
+
                     // we need to swap back for silent swap
                     if (swap.getValue().equals(InventoryManager.Swap.PACKET) && hand.equals(Hand.MAIN_HAND)) {
                         swapBack();
@@ -200,17 +207,32 @@ public class AutoCrystal extends Module {
         if (explode.getValue()) {
             findBestCrystal();
 
-            if (attackCrystal != null && explodeTimer.getPassedMs() / 50.0f >= 20.0f - explodeSpeed.getValue()) {
-                explodeTimer.reset();
+            if (attackCrystal != null) {
+                int oSlot = -1;
+                if (placePosition == null && mc.player.hasStatusEffect(StatusEffects.WEAKNESS) && !weakness.getValue().equals(Weakness.NONE)) {
+                    int slot = InventoryUtil.getSlot(SwordItem.class, false);
+                    if (slot != -1) {
+                        oSlot = getSaturn().getInventoryManager().getServerSlot();
+                        getSaturn().getInventoryManager().swap(slot, weakness.getValue().swap);
+                    }
+                }
 
-                RotationUtil.rotation(attackCrystal.getEyePos())
-                        .type(rotate.getValue().type)
-                        .send(false);
+                if (explodeTimer.getPassedMs() / 50.0f >= 20.0f - explodeSpeed.getValue()) {
+                    explodeTimer.reset();
 
-                // attack
-                mc.interactionManager.attackEntity(mc.player, attackCrystal);
+                    RotationUtil.rotation(attackCrystal.getEyePos())
+                            .type(rotate.getValue().type)
+                            .send(false);
 
-                mc.player.swingHand(Hand.MAIN_HAND);
+                    // attack
+                    NetworkUtil.sendPacket(PlayerInteractEntityC2SPacket.attack(attackCrystal, mc.player.isSneaking()));
+
+                    mc.player.swingHand(Hand.MAIN_HAND);
+
+                    if (oSlot != -1) {
+                        getSaturn().getInventoryManager().swap(oSlot, weakness.getValue().swap);
+                    }
+                }
             }
         }
     }
@@ -418,6 +440,18 @@ public class AutoCrystal extends Module {
 
         oldSlot = -1;
         hand = null;
+    }
+
+    public enum Weakness {
+        NONE(InventoryManager.Swap.NONE),
+        PACKET(InventoryManager.Swap.PACKET),
+        CLIENT(InventoryManager.Swap.CLIENT);
+
+        private final InventoryManager.Swap swap;
+
+        Weakness(InventoryManager.Swap swap) {
+            this.swap = swap;
+        }
     }
 
     public enum Rotate {
