@@ -76,6 +76,16 @@ public class Module implements Wrapper {
         return description;
     }
 
+    public Setting getSetting(String name) {
+        for (Setting setting : settings) {
+            if (setting.getName().equalsIgnoreCase(name)) {
+                return setting;
+            }
+        }
+
+        return null;
+    }
+
     public ArrayList<Setting> getSettings() {
         return settings;
     }

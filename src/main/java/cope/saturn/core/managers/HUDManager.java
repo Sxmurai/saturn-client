@@ -52,6 +52,16 @@ public class HUDManager implements Wrapper {
         }
     }
 
+    public HUDElement getElement(String name) {
+        for (HUDElement element : elements) {
+            if (element.getName().equalsIgnoreCase(name)) {
+                return element;
+            }
+        }
+
+        return null;
+    }
+
     public ArrayList<HUDElement> getElements() {
         return elements;
     }

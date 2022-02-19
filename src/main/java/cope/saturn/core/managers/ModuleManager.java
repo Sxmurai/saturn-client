@@ -104,6 +104,16 @@ public class ModuleManager implements Wrapper {
         }
     }
 
+    public <T extends Module> T getModule(String name) {
+        for (Module module : modules) {
+            if (module.getName().equals(name)) {
+                return (T) module;
+            }
+        }
+
+        return null;
+    }
+
     public ArrayList<Module> getModules() {
         return modules;
     }

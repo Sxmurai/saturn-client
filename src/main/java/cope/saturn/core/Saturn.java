@@ -8,6 +8,7 @@ package cope.saturn.core;
 import cope.saturn.core.managers.*;
 import cope.saturn.core.managers.interaction.InteractionManager;
 import cope.saturn.core.updater.VersionChecker;
+import cope.saturn.util.internal.FileUtil;
 import me.bush.eventbus.bus.EventBus;
 import me.bush.eventbus.handler.handlers.ReflectHandler;
 import net.fabricmc.api.ClientModInitializer;
@@ -34,9 +35,17 @@ public class Saturn implements ClientModInitializer {
     private ServerManager serverManager;
     private TotemPopManager totemPopManager;
 
+    private ConfigManager configManager;
+
     @Override
     public void onInitializeClient() {
         INSTANCE = this;
+
+        // create our config folder
+        if (!FileUtil.exists(FileUtil.CONFIG_FOLDER)) {
+            LOGGER.info("Config folder did not exist, creating at {}", FileUtil.CONFIG_FOLDER);
+            FileUtil.mkDir(FileUtil.CONFIG_FOLDER);
+        }
 
         moduleManager = new ModuleManager();
         commandManager = new CommandManager();
@@ -48,8 +57,13 @@ public class Saturn implements ClientModInitializer {
         serverManager = new ServerManager();
         totemPopManager = new TotemPopManager();
 
+        configManager = new ConfigManager();
+
         // handle updates
         VersionChecker.handleUpdates();
+
+        // add shutdown hook to save our configs
+        Runtime.getRuntime().addShutdownHook(new Thread(() -> configManager.shutdown()));
     }
 
     public ModuleManager getModuleManager() {
@@ -82,6 +96,10 @@ public class Saturn implements ClientModInitializer {
 
     public TotemPopManager getTotemPopManager() {
         return totemPopManager;
+    }
+
+    public ConfigManager getConfigManager() {
+        return configManager;
     }
 
     public static Saturn getInstance() {
