@@ -52,6 +52,7 @@ public class ModuleManager implements Wrapper {
         modules.add(new MiddleClick());
         modules.add(new PingSpoof());
         modules.add(new Portal());
+        modules.add(new Replenish());
 
         // Movement
         modules.add(new AntiVoid());
