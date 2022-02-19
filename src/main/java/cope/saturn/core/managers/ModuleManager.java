@@ -39,6 +39,7 @@ public class ModuleManager implements Wrapper {
         // Combat
         modules.add(new AimBot());
         modules.add(new Aura());
+        modules.add(new AutoArmor());
         // modules.add(new AutoBed()) TODO: something is severely wrong with this module, idk what;
         modules.add(new AutoCrystal());
         modules.add(new AutoTotem());
